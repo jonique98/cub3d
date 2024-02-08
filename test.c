@@ -10,7 +10,7 @@
 #define screenWidth 1000
 #define screenHeight 1000
 
-int up = 0;
+int size = 0;
 
 int worldMap[mapWidth][mapHeight]=
 {
@@ -84,6 +84,7 @@ typedef struct s_plane
 
 typedef struct s_vec
 {
+	int	up;
 	t_pos pos;
 	t_dir dir;
 	t_plane plane;
@@ -101,12 +102,16 @@ void			my_mlx_pixel_put(t_data *data, int x, int y, int color)
 {
 	char	*dst;
 
+	if(x < 0 || x >= screenWidth || y < 0 || y >= screenHeight)
+		return ;
 	dst = data->addr + (y * data->line_length + x * (data->bits_pixel / 8));
 	*(unsigned int*)dst = color;
 }
 
 void init_vec(t_vec *vec)
 {
+	vec->up = 0;
+
 	vec->pos.x = 10;
 	vec->pos.y = 14;
 
@@ -117,9 +122,9 @@ void init_vec(t_vec *vec)
 	vec->plane.y = 0;
 }
 
-void draw_background(int line, t_data *image)
+void draw_background(t_param *param, int line, t_data *image)
 {
-	line += up;
+	line += param->vec->up;
 	for(int x = 0; x < screenWidth; x++)
 	{
 		for(int y = 0; y < screenHeight; y++)
@@ -132,7 +137,7 @@ void draw_background(int line, t_data *image)
 	}
 }
 
-void draw_map(t_data *image, t_vec *vec)
+void draw_map(t_param *param, t_data *image, t_vec *vec)
 {
 	double w = screenWidth;
 	// double w = mapHeight;
@@ -226,8 +231,8 @@ void draw_map(t_data *image, t_vec *vec)
 		if(side == 1)
 			color = color / 3;
 
-		drawStart += up;
-		drawEnd += up;
+		drawStart += param->vec->up;
+		drawEnd += param->vec->up;
 
 		for(int y = drawStart; y < drawEnd; y++)
 			my_mlx_pixel_put(image, x, y, color);
@@ -264,57 +269,59 @@ void rotate_right(t_vec *vec)
 
 void move_left(t_vec *vec)
 {
-	if (worldMap[(int)(vec->pos.x - vec->dir.y * 0.1)][(int)vec->pos.y] == 0)
+	if (worldMap[(int)(vec->pos.x - vec->dir.y * 0.9)][(int)vec->pos.y] == 0)
 		vec->pos.x -= vec->dir.y * 0.1;
-	if (worldMap[(int)vec->pos.x][(int)(vec->pos.y + vec->dir.x * 0.1)] == 0)
+	if (worldMap[(int)vec->pos.x][(int)(vec->pos.y + vec->dir.x * 0.9)] == 0)
 		vec->pos.y += vec->dir.x * 0.1;
 }
 
 void move_right(t_vec *vec)
 {
-	if (worldMap[(int)(vec->pos.x + vec->dir.y * 0.1)][(int)vec->pos.y] == 0)
+	if (worldMap[(int)(vec->pos.x + vec->dir.y * 0.9)][(int)vec->pos.y] == 0)
 		vec->pos.x += vec->dir.y * 0.1;
-	if (worldMap[(int)vec->pos.x][(int)(vec->pos.y - vec->dir.x * 0.1)] == 0)
+	if (worldMap[(int)vec->pos.x][(int)(vec->pos.y - vec->dir.x * 0.9)] == 0)
 		vec->pos.y -= vec->dir.x * 0.1;
 }
 
 void move_forward(t_vec *vec)
 {
 
-	if (worldMap[(int)(vec->pos.x + vec->dir.x * 0.1)][(int)vec->pos.y] == 0)
+	if (worldMap[(int)(vec->pos.x + vec->dir.x * 0.9)][(int)vec->pos.y] == 0)
 		vec->pos.x += vec->dir.x * 0.1;
-	if (worldMap[(int)vec->pos.x][(int)(vec->pos.y + vec->dir.y * 0.1)] == 0)
+	if (worldMap[(int)vec->pos.x][(int)(vec->pos.y + vec->dir.y * 0.9)] == 0)
 		vec->pos.y += vec->dir.y * 0.1;
 }
 
 void move_backward(t_vec *vec)
 {
-	if (worldMap[(int)(vec->pos.x - vec->dir.x * 0.1)][(int)vec->pos.y] == 0)
+	if (worldMap[(int)(vec->pos.x - vec->dir.x * 0.9)][(int)vec->pos.y] == 0)
 		vec->pos.x -= vec->dir.x * 0.1;
-	if (worldMap[(int)vec->pos.x][(int)(vec->pos.y - vec->dir.y * 0.1)] == 0)
+	if (worldMap[(int)vec->pos.x][(int)(vec->pos.y - vec->dir.y * 0.9)] == 0)
 		vec->pos.y -= vec->dir.y * 0.1;
 }
 
-void draw(t_param *param)
-{
-	make_new_img(param->image);
-	draw_background(screenHeight / 2, param->image);
-	draw_map(param->image, param->vec);
-	mlx_put_image_to_window(param->image->mlx, param->image->win_ptr, param->image->img, 0, 0);
-}
-
 void draw_bullet(t_data *image, int x, int y, float size) {
+
 	int radius = (int)size; // 총알의 크기를 반지름으로 사용
 
 	for (int i = x - radius; i <= x + radius; i++) {
 		for (int j = y - radius; j <= y + radius; j++) {
 			if ((i - x) * (i - x) + (j - y) * (j - y) <= radius * radius) {
 				if (i >= 0 && i < screenWidth && j >= 0 && j < screenHeight) {
-					my_mlx_pixel_put(image, i, j, 0xFFFFFF); // 흰색으로 그림
+					my_mlx_pixel_put(image, i, j, 0xFFFFFF);
 				}
 			}
 		}
 	}
+}
+
+void draw(t_param *param)
+{
+		make_new_img(param->image);
+		draw_background(param, screenHeight / 2, param->image);
+		draw_map(param, param->image, param->vec);
+		// draw_bullet(param->image, 500, 500, size);
+		mlx_put_image_to_window(param->image->mlx, param->image->win_ptr, param->image->img, 0, 0);
 }
 
 int move(int key_code, t_param *param)
@@ -342,7 +349,7 @@ int move(int key_code, t_param *param)
 
 int key_lift(int key_code, t_param *param)
 {
-	if(key_code == 123)
+	if (key_code == 123)
 		param->key->left_rotate = 0;
 	else if (key_code == 124)
 		param->key->right_rotate = 0;
@@ -358,7 +365,6 @@ int key_lift(int key_code, t_param *param)
 		param->key->down = 0;
 	else if (key_code == 126)
 		param->key->up = 0;
-
 	return (0);
 }
 
@@ -402,15 +408,15 @@ int render(t_param *param)
 		move_backward(param->vec);
 	if (param->key->up)
 	{
-		if(up < 300)
-			up += 20;
+		if(param->vec->up < 300)
+			param->vec->up += 20;
 	}
 	if (param->key->down)
 	{
-		if(up > -200)
-			up -= 20;
+		if(param->vec->up > -200)
+			param->vec->up -= 20;
 	}
-	get_delay(1, 16666, 0);
+	// get_delay(1, 16666, 0);
 	draw(param);
 	// mlx_do_sync(param->image->mlx);
 	return (0);
@@ -445,9 +451,7 @@ int main()
 	param.vec = &vec;
 	param.key = &key;
 
-	draw_background(screenHeight / 2, &image);
-	draw_map(&image, &vec);
-	mlx_put_image_to_window(image.mlx, image.win_ptr, image.img, 0, 0);
+	draw(&param);
 
 	mlx_hook(image.win_ptr, 2, 0, move, &param);
 	mlx_hook(image.win_ptr, 3, 1L << 1, key_lift, &param);
