@@ -2,7 +2,7 @@ CC = gcc
 FLAGS =  -lmlx -framework OpenGL -framework Appkit -lz
 CFLAGS = -Wall -Wextra -Werror
 LIBFTFLAG	= -Llibft -lft
-SRC_NAME = test
+SRC_NAME =  test draw hooks init move rotate util mock
 RMF = rm -f
 
 MAN_DIR = ./man_src/
