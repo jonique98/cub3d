@@ -81,6 +81,15 @@ typedef struct s_plane
 	double y;
 } t_plane;
 
+typedef struct s_frame
+{
+	double time;
+	double oldTime;
+	double frameTime;
+	double moveSpeed;
+	double rotSpeed;
+} t_frame;
+
 
 typedef struct s_vec
 {
@@ -95,8 +104,32 @@ typedef struct s_param
 	t_data *image;
 	t_vec *vec;
 	t_key *key;
+	t_frame *frame;
 } t_param;
 
+int		get_delay(int startnow, int min, int mac)
+{
+	static struct timeval	start;
+	static struct timeval	stop;
+	unsigned long			delta_us;
+
+	if (startnow)
+	{
+		gettimeofday(&start, NULL);
+		return (0);
+	}
+	else
+		gettimeofday(&stop, NULL);
+	delta_us = (stop.tv_sec - start.tv_sec) * 1000000
+		+ stop.tv_usec - start.tv_usec;
+	if (delta_us < (unsigned long)min)
+	{
+		if (!mac)
+			usleep((min - delta_us) % 1000000);
+		return (0);
+	}
+	return (delta_us - min);
+}
 
 void			my_mlx_pixel_put(t_data *data, int x, int y, int color)
 {
@@ -141,7 +174,7 @@ void draw_map(t_param *param, t_data *image, t_vec *vec)
 {
 	double w = screenWidth;
 	// double w = mapHeight;
- for(int x = 0; x < w; x++)
+	for(int x = 0; x < w; x++)
 	{
 	  double cameraX = 2 * x / w -1;
 	  double rayDirX = vec->dir.x + vec->plane.x * cameraX;
@@ -247,62 +280,62 @@ void	make_new_img(t_data *image)
 	&image->bits_pixel, &image->line_length, &image->endian);
 }
 
-void rotate_left(t_vec *vec)
+void rotate_left(t_param *param)
 {
-	double oldDirX = vec->dir.x;
-	vec->dir.x = vec->dir.x * cos(0.1) - vec->dir.y * sin(0.1);
-	vec->dir.y = oldDirX * sin(0.1) + vec->dir.y * cos(0.1);
-	double oldPlaneX = vec->plane.x;
-	vec->plane.x = vec->plane.x * cos(0.1) - vec->plane.y * sin(0.1);
-	vec->plane.y = oldPlaneX * sin(0.1) + vec->plane.y * cos(0.1);
+	double oldDirX = param->vec->dir.x;
+	param->vec->dir.x = param->vec->dir.x * cos(param->frame->rotSpeed) - param->vec->dir.y * sin(param->frame->rotSpeed);
+	param->vec->dir.y = oldDirX * sin(param->frame->rotSpeed) + param->vec->dir.y * cos(param->frame->rotSpeed);
+	double oldPlaneX = param->vec->plane.x;
+	param->vec->plane.x = param->vec->plane.x * cos(param->frame->rotSpeed) - param->vec->plane.y * sin(param->frame->rotSpeed);
+	param->vec->plane.y = oldPlaneX * sin(param->frame->rotSpeed) + param->vec->plane.y * cos(param->frame->rotSpeed);
 }
 
-void rotate_right(t_vec *vec)
+void rotate_right(t_param *param)
 {
-	double oldDirX = vec->dir.x;
-	vec->dir.x = vec->dir.x * cos(-0.1) - vec->dir.y * sin(-0.1);
-	vec->dir.y = oldDirX * sin(-0.1) + vec->dir.y * cos(-0.1);
-	double oldPlaneX = vec->plane.x;
-	vec->plane.x = vec->plane.x * cos(-0.1) - vec->plane.y * sin(-0.1);
-	vec->plane.y = oldPlaneX * sin(-0.1) + vec->plane.y * cos(-0.1);
+	double oldDirX = param->vec->dir.x;
+	param->vec->dir.x = param->vec->dir.x * cos(-param->frame->rotSpeed) - param->vec->dir.y * sin(-param->frame->rotSpeed);
+	param->vec->dir.y = oldDirX * sin(-param->frame->rotSpeed) + param->vec->dir.y * cos(-param->frame->rotSpeed);
+	double oldPlaneX = param->vec->plane.x;
+	param->vec->plane.x = param->vec->plane.x * cos(-param->frame->rotSpeed) - param->vec->plane.y * sin(-param->frame->rotSpeed);
+	param->vec->plane.y = oldPlaneX * sin(-param->frame->rotSpeed) + param->vec->plane.y * cos(-param->frame->rotSpeed);
 }
 
-void move_left(t_vec *vec)
+void move_forward(t_param *param)
 {
-	if (worldMap[(int)(vec->pos.x - vec->dir.y * 0.9)][(int)vec->pos.y] == 0)
-		vec->pos.x -= vec->dir.y * 0.1;
-	if (worldMap[(int)vec->pos.x][(int)(vec->pos.y + vec->dir.x * 0.9)] == 0)
-		vec->pos.y += vec->dir.x * 0.1;
+	if(worldMap[(int)(param->vec->pos.x + param->vec->dir.x * param->frame->moveSpeed)][(int)param->vec->pos.y] == 0)
+		param->vec->pos.x += param->vec->dir.x * param->frame->moveSpeed;
+	if(worldMap[(int)param->vec->pos.x][(int)(param->vec->pos.y + param->vec->dir.y * param->frame->moveSpeed)] == 0)
+		param->vec->pos.y += param->vec->dir.y * param->frame->moveSpeed;
 }
 
-void move_right(t_vec *vec)
+void move_backward(t_param *param)
 {
-	if (worldMap[(int)(vec->pos.x + vec->dir.y * 0.9)][(int)vec->pos.y] == 0)
-		vec->pos.x += vec->dir.y * 0.1;
-	if (worldMap[(int)vec->pos.x][(int)(vec->pos.y - vec->dir.x * 0.9)] == 0)
-		vec->pos.y -= vec->dir.x * 0.1;
+	if(worldMap[(int)(param->vec->pos.x - param->vec->dir.x * param->frame->moveSpeed)][(int)param->vec->pos.y] == 0)
+		param->vec->pos.x -= param->vec->dir.x * param->frame->moveSpeed;
+	if(worldMap[(int)param->vec->pos.x][(int)(param->vec->pos.y - param->vec->dir.y * param->frame->moveSpeed)] == 0)
+		param->vec->pos.y -= param->vec->dir.y * param->frame->moveSpeed;
 }
 
-void move_forward(t_vec *vec)
+void move_left(t_param *param)
 {
-
-	if (worldMap[(int)(vec->pos.x + vec->dir.x * 0.9)][(int)vec->pos.y] == 0)
-		vec->pos.x += vec->dir.x * 0.1;
-	if (worldMap[(int)vec->pos.x][(int)(vec->pos.y + vec->dir.y * 0.9)] == 0)
-		vec->pos.y += vec->dir.y * 0.1;
+	if(worldMap[(int)(param->vec->pos.x - param->vec->dir.y * param->frame->moveSpeed)][(int)param->vec->pos.y] == 0)
+		param->vec->pos.x -= param->vec->dir.y * param->frame->moveSpeed;
+	if(worldMap[(int)param->vec->pos.x][(int)(param->vec->pos.y + param->vec->dir.x * param->frame->moveSpeed)] == 0)
+		param->vec->pos.y += param->vec->dir.x * param->frame->moveSpeed;
 }
 
-void move_backward(t_vec *vec)
+void move_right(t_param *param)
 {
-	if (worldMap[(int)(vec->pos.x - vec->dir.x * 0.9)][(int)vec->pos.y] == 0)
-		vec->pos.x -= vec->dir.x * 0.1;
-	if (worldMap[(int)vec->pos.x][(int)(vec->pos.y - vec->dir.y * 0.9)] == 0)
-		vec->pos.y -= vec->dir.y * 0.1;
+	if(worldMap[(int)(param->vec->pos.x + param->vec->dir.y * param->frame->moveSpeed)][(int)param->vec->pos.y] == 0)
+		param->vec->pos.x += param->vec->dir.y * param->frame->moveSpeed;
+	if(worldMap[(int)param->vec->pos.x][(int)(param->vec->pos.y - param->vec->dir.x * param->frame->moveSpeed)] == 0)
+		param->vec->pos.y -= param->vec->dir.x * param->frame->moveSpeed;
 }
+
 
 void draw_bullet(t_data *image, int x, int y, float size) {
 
-	int radius = (int)size; // 총알의 크기를 반지름으로 사용
+	int radius = (int)size; 
 
 	for (int i = x - radius; i <= x + radius; i++) {
 		for (int j = y - radius; j <= y + radius; j++) {
@@ -317,11 +350,22 @@ void draw_bullet(t_data *image, int x, int y, float size) {
 
 void draw(t_param *param)
 {
-		make_new_img(param->image);
-		draw_background(param, screenHeight / 2, param->image);
-		draw_map(param, param->image, param->vec);
-		// draw_bullet(param->image, 500, 500, size);
-		mlx_put_image_to_window(param->image->mlx, param->image->win_ptr, param->image->img, 0, 0);
+	make_new_img(param->image);
+	draw_background(param, 500, param->image);
+	draw_map(param, param->image, param->vec);
+
+	param->frame->time = get_delay(0, 16666, 0);
+	param->frame->frameTime = (param->frame->time - param->frame->oldTime) / 1000.0;
+
+	draw_map(param, param->image, param->vec);
+	mlx_put_image_to_window(param->image->mlx, param->image->win_ptr, param->image->img, 0, 0);
+	// mlx_do_sync(param->image->mlx);
+	
+	param->frame->oldTime = param->frame->time;
+
+	param->frame->moveSpeed = param->frame->frameTime * 5.0;
+	param->frame->rotSpeed = param->frame->frameTime * 3.0;
+
 }
 
 int move(int key_code, t_param *param)
@@ -368,44 +412,20 @@ int key_lift(int key_code, t_param *param)
 	return (0);
 }
 
-int		get_delay(int startnow, int min, int mac)
-{
-	static struct timeval	start;
-	static struct timeval	stop;
-	unsigned long			delta_us;
-
-	if (startnow)
-	{
-		gettimeofday(&start, NULL);
-		return (0);
-	}
-	else
-		gettimeofday(&stop, NULL);
-	delta_us = (stop.tv_sec - start.tv_sec) * 1000000
-		+ stop.tv_usec - start.tv_usec;
-	if (delta_us < (unsigned long)min)
-	{
-		if (!mac)
-			usleep((min - delta_us) % 1000000);
-		return (0);
-	}
-	return (delta_us - min);
-}
-
 int render(t_param *param)
 {
 	if (param->key->left_rotate)
-		rotate_left(param->vec);
+		rotate_left(param);
 	if (param->key->right_rotate)
-		rotate_right(param->vec);
+		rotate_right(param);
 	if (param->key->left)
-		move_left(param->vec);
+		move_left(param);
 	if (param->key->right)
-		move_right(param->vec);
+		move_right(param);
 	if (param->key->forward)
-		move_forward(param->vec);
+		move_forward(param);
 	if (param->key->backward)
-		move_backward(param->vec);
+		move_backward(param);
 	if (param->key->up)
 	{
 		if(param->vec->up < 300)
@@ -416,9 +436,7 @@ int render(t_param *param)
 		if(param->vec->up > -200)
 			param->vec->up -= 20;
 	}
-	// get_delay(1, 16666, 0);
 	draw(param);
-	// mlx_do_sync(param->image->mlx);
 	return (0);
 }
 
@@ -432,26 +450,36 @@ void init_key(t_key *key)
 	key->backward = 0;
 }
 
+void init_frame(t_frame *frame)
+{
+	frame->time = 0;
+	frame->oldTime = get_delay(1, 0, 0);
+	frame->frameTime = 0;
+	frame->moveSpeed = 0;
+	frame->rotSpeed = 0;
+}
+
 int main()
 {
 	t_data image;
 	t_vec vec;
 	t_key key;
+	t_frame frame;
 	t_param param;
-
-	init_key(&key);
-	init_vec(&vec);
 
 	image.mlx = mlx_init();
 	image.win_ptr = mlx_new_window(image.mlx, screenHeight, screenWidth, "Hellow World!");
-	image.img = mlx_new_image(image.mlx, screenHeight, screenWidth); // 이미지 객체 생성
+	image.img = mlx_new_image(image.mlx, screenHeight, screenWidth); 
 	image.addr = mlx_get_data_addr(image.img, &image.bits_pixel, &image.line_length, &image.endian);
+
+	init_vec(&vec);
+	init_key(&key);
+	init_frame(&frame);
 
 	param.image = &image;
 	param.vec = &vec;
 	param.key = &key;
-
-	draw(&param);
+	param.frame = &frame;
 
 	mlx_hook(image.win_ptr, 2, 0, move, &param);
 	mlx_hook(image.win_ptr, 3, 1L << 1, key_lift, &param);
