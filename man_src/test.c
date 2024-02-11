@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   test.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sumjo <sumjo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: jiko <jiko@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 05:09:10 by sumjo             #+#    #+#             */
-/*   Updated: 2024/02/11 05:32:59 by sumjo            ###   ########.fr       */
+/*   Updated: 2024/02/12 05:08:03 by jiko             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,7 +114,7 @@ void draw_map(t_var *var, t_data *image, t_vec *vec)
 	}
 }
 
-int main()
+int main(int argc, char **argv)
 {
 	t_data image;
 	t_vec vec;
@@ -123,11 +123,11 @@ int main()
 	t_var var;
 	t_map map;
 
+	init_map(argc, argv, &map);
 	init_mlx(&image);
 	init_vec(&vec);
 	init_key(&key);
 	init_frame(&frame);
-	init_map(&map);
 
 	var.image = &image;
 	var.vec = &vec;

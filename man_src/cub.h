@@ -2,12 +2,19 @@
 #ifndef CUB_H
 # define CUB_H
 
+# ifndef BUFFER_SIZE
+#  define BUFFER_SIZE 42
+# endif
+
 # include <stdio.h>
-# include <mlx.h>
+// # include <mlx.h>
+# include "../minilibx/mlx.h"
+# include "../libft/libft.h"
 # include <math.h>
 # include <stdlib.h>
 # include <unistd.h>
 # include <sys/time.h>
+# include <fcntl.h>
 
 #define mapWidth 24
 #define mapHeight 24
@@ -75,9 +82,20 @@ typedef struct s_vec
 
 typedef struct s_map
 {
-	int	**map;
-	int	map_width;
-	int	map_height;
+	int		**map;
+	int		map_flag;
+	int		map_start;
+	int		map_width;
+	int		map_height;
+	char 	*no;
+	char 	*so;
+	char 	*we;
+	char 	*ea;
+	int		floor;
+	int		ceiling;
+	int		player_x;
+	int		player_y;
+	char	player_dir;
 }t_map;
 
 typedef struct s_var
@@ -108,6 +126,17 @@ int		key_lift(int key_code, t_var *var);
 int		render(t_var *var);
 int		get_time(void);
 void	init_mlx(t_data *image);
-void	init_map(t_map *map);
+void 	init_map(int argv, char **argc, t_map *map);
+void	*wft_calloc(int count, int size);
+int		ft_exit(int ret, char *str);
+int		get_next_line(int fd, char **dest);
+char	*wft_strdup(const char *src);
+char	*wft_substr(char const *s, unsigned int start, size_t len);
+int 	ft_strlen_doble(char **str);
+int		ft_color(char *str);
+char	**wft_split(char const *str, char c);
+char	**double_free(int i, char	**be_return);
+void	safe_free(void *ptr);
+int		ft_max(int a, int b);
 
 # endif

@@ -1,3 +1,2 @@
-*.dylib
 *.DS_store
-minilibx_*
+cub3D

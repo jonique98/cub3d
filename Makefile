@@ -1,8 +1,8 @@
 CC = gcc
-FLAGS =  -lmlx -framework OpenGL -framework Appkit -lz
+FLAGS =  -L./ -lmlx -framework OpenGL -framework Appkit -lz
 CFLAGS = -Wall -Wextra -Werror
 LIBFTFLAG	= -Llibft -lft
-SRC_NAME =  test draw hooks init move rotate util mock
+SRC_NAME =  test draw hooks init move rotate util map get_next_line wft_substr_strdup wft_split
 RMF = rm -f
 
 MAN_DIR = ./man_src/
@@ -27,10 +27,10 @@ $(BON_NAME) : $(BON_OBJ)
 	$(CC) $(CFLAGS) $(FLAGS) $^ -o $@ $(LIBFTFLAG)
 
 lib :
-	@make -j -C ./libft
+	@make -s -j -C ./libft
 
 %.o : %.c
-	$(CC) $(CFLAGS) -I $(dir $<) -c $< -o $@
+	$(CC) $(CFLAGS) -I $(dir $<)  -c $< -o $@
 
 clean :
 	@make clean -C ./libft
