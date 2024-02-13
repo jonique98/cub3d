@@ -6,7 +6,7 @@
 /*   By: jiko <jiko@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 00:06:24 by jiko              #+#    #+#             */
-/*   Updated: 2024/02/12 05:16:03 by jiko             ###   ########.fr       */
+/*   Updated: 2024/02/13 18:08:08 by jiko             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -160,6 +160,8 @@ static void set_map(int fd, t_map *t_map)
 				map[i][j] = 0;
 			else if (line[j] == 'N' || line[j] == 'S' || line[j] == 'W' || line[j] == 'E')
 			{
+				if (t_map->player_dir)
+					ft_exit(1, "Error\nInvalid map\n");
 				map[i][j] = 0;
 				t_map->player_x = j;
 				t_map->player_y = i;
@@ -168,6 +170,8 @@ static void set_map(int fd, t_map *t_map)
 		}
 		free(line);
 	}
+	if (!t_map->player_dir)
+		ft_exit(1, "Error\nInvalid map\n");
 	t_map->map = map;
 }
 	
@@ -178,6 +182,8 @@ void init_map(int argv, char **argc, t_map *map)
 	fd = open_cube(argv, argc, map);
 	set_param(fd, map);
 	close(fd);
+	if (!is_param_full(map) || !map->map_height || !map->map_width)
+		ft_exit(1, "Error\nInvalid map\n");
 	fd = open(argc[1], O_RDONLY);
 	set_map(fd, map);
 	printf("no : %s\n", map->no);
