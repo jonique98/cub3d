@@ -37,6 +37,7 @@ typedef struct s_data
 	void	*mlx;
 	void	*img;
 	char	*addr;
+	int		*addr_tex;
 	int		bits_pixel;
 	int		line_length;
 	int		endian;
@@ -98,7 +99,7 @@ typedef struct s_ray
 	t_vec	rayDir;
 	t_vec	sideDist;
 	t_vec	deltaDist;
-	t_vec	perpWallDist;
+	double	perpWallDist;
 	t_cor	step;
 	t_cor	map;
 	int		side;
@@ -111,7 +112,7 @@ typedef struct s_ray
 typedef struct  s_texture
 {
     char		*tex_path;
-    int             *texture;
+    int         *texture;
     double		width;
     double		height;
 }t_texture;
@@ -124,6 +125,7 @@ typedef struct s_var
 	t_frame	*frame;
 	t_map	*map;
 	t_ray 	*ray;
+	t_texture 	texture[4];
 } t_var;
 
 void	my_mlx_pixel_put(t_data *data, int x, int y, int color);

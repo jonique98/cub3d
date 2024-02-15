@@ -6,7 +6,7 @@
 /*   By: sumjo <sumjo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 05:09:37 by sumjo             #+#    #+#             */
-/*   Updated: 2024/02/16 04:51:19 by sumjo            ###   ########.fr       */
+/*   Updated: 2024/02/16 06:45:10 by sumjo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,8 @@ void	init_mlx(t_data *image)
 		mlx_new_image(image->mlx, screenHeight, screenWidth);
 	image->addr = mlx_get_data_addr
 		(image->img, &image->bits_pixel, &image->line_length, &image->endian);
+	image->addr_tex = (int *)mlx_get_data_addr
+		(image->img, &image->bits_pixel, &image->line_length, &image->endian);
 	image->width = screenWidth;
 	image->height = screenHeight;
 }
@@ -89,7 +91,7 @@ void init_ray(t_ray *ray)
 	ray->sideDist.y = 0;
 	ray->deltaDist.x = 0;
 	ray->deltaDist.y = 0;
-	ray->perpWallDist.x = 0;
+	ray->perpWallDist = 0;
 	ray->step.x = 0;
 	ray->step.y = 0;
 	ray->map.x = 0;

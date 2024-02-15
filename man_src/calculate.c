@@ -6,7 +6,7 @@
 /*   By: sumjo <sumjo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/16 03:18:08 by sumjo             #+#    #+#             */
-/*   Updated: 2024/02/16 03:48:16 by sumjo            ###   ########.fr       */
+/*   Updated: 2024/02/16 06:18:29 by sumjo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,18 +78,18 @@ void	calculate_wall_hit_dda(t_var *var)
 void	calculate_distance_between_wall(t_var *var)
 {
 	if (var->ray->side == 0)
-		var->ray->perpWallDist.x = \
+		var->ray->perpWallDist = \
 		(var->ray->map.x - var->vec->pos.x + \
 		(1 - var->ray->step.x) / 2) / var->ray->rayDir.x;
 	else
-		var->ray->perpWallDist.x = \
+		var->ray->perpWallDist = \
 		(var->ray->map.y - var->vec->pos.y + \
 		(1 - var->ray->step.y) / 2) / var->ray->rayDir.y;
 }
 
 void	calculate_draw_start_end(t_var *var)
 {
-	var->ray->lineHeight = (int)(screenHeight / var->ray->perpWallDist.x);
+	var->ray->lineHeight = (int)(screenHeight / var->ray->perpWallDist);
 	var->ray->drawStart = -var->ray->lineHeight / 2 + screenHeight / 2;
 	if (var->ray->drawStart < 0)
 		var->ray->drawStart = 0;
