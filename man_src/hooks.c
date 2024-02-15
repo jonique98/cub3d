@@ -6,7 +6,7 @@
 /*   By: sumjo <sumjo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 05:12:32 by sumjo             #+#    #+#             */
-/*   Updated: 2024/02/11 05:48:23 by sumjo            ###   ########.fr       */
+/*   Updated: 2024/02/16 01:56:30 by sumjo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,18 @@ int	key_lift(int key_code, t_var *var)
 	return (0);
 }
 
+void look_up(t_var *var)
+{
+	if(var->vec->up < 100)
+	var->vec->up += 10;
+}
+
+void look_down(t_var *var)
+{
+	if (var->vec->up > -1)
+		var->vec->up -= 10;
+}
+
 int	render(t_var *var)
 {
 	if (var->key->left_rotate)
@@ -71,15 +83,9 @@ int	render(t_var *var)
 	if (var->key->backward)
 		move_backward(var);
 	if (var->key->up)
-	{
-		if (var->vec->up < 300)
-			var->vec->up += var->frame->moveSpeed * 100;
-	}
+		look_up(var);
 	if (var->key->down)
-	{
-		if (var->vec->up > -200)
-			var->vec->up -= var->frame->moveSpeed * 100;
-	}
+		look_down(var);
 	draw(var);
 	return (0);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jiko <jiko@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: sumjo <sumjo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 00:06:24 by jiko              #+#    #+#             */
-/*   Updated: 2024/02/15 16:05:00 by jiko             ###   ########.fr       */
+/*   Updated: 2024/02/16 01:03:59 by sumjo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ static void set_param(int fd, t_map *map)
 	char *line;
 	char **s;
 	int ret;
-	
+
 	while ((ret = get_next_line(fd, &line)) > 0)
 	{
 		map->map_start++;
@@ -136,7 +136,7 @@ static void set_map(int fd, t_map *t_map)
 {
 	int **map;
 	char *line;
-	
+
 	map = wft_calloc(t_map->map_height, sizeof(int *));
 	for (int i = 0; i < t_map->map_height; i++) 
 		map[i] = wft_calloc(t_map->map_width, sizeof(int));
@@ -237,4 +237,4 @@ void init_map(int argv, char **argc, t_map *map)
 	close(fd);
 	dfs_valid_map(map);
 }
-    
+

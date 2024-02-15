@@ -16,8 +16,6 @@
 # include <sys/time.h>
 # include <fcntl.h>
 
-#define mapWidth 24
-#define mapHeight 24
 #define screenWidth 1000
 #define screenHeight 1000
 
@@ -44,23 +42,17 @@ typedef struct s_data
 	int		endian;
 }t_data;
 
-typedef struct s_pos
+typedef struct s_vec
 {
 	double	x;
 	double	y;
-}t_pos;
+}t_vec;
 
-typedef struct s_dir
+typedef struct s_cor
 {
-	double	x;
-	double	y;
-}t_dir;
-
-typedef struct s_plane
-{
-	double	x;
-	double	y;
-}t_plane;
+	int	x;
+	int	y;
+}t_cor;
 
 typedef struct s_frame
 {
@@ -72,13 +64,13 @@ typedef struct s_frame
 }t_frame;
 
 
-typedef struct s_vec
+typedef struct s_vectorset
 {
 	int		up;
-	t_pos	pos;
-	t_dir	dir;
-	t_plane	plane;
-}t_vec;
+	t_vec	pos;
+	t_vec	dir;
+	t_vec	plane;
+}t_vec_set;
 
 typedef struct s_map
 {
@@ -98,20 +90,37 @@ typedef struct s_map
 	char	player_dir;
 }t_map;
 
+typedef struct s_ray
+{
+	double	cameraX;
+	t_vec	rayDir;
+	t_vec	sideDist;
+	t_vec	deltaDist;
+	t_vec	perpWallDist;
+	t_cor	step;
+	t_cor	map;
+	int		side;
+	int		lineHeight;
+	int		drawStart;
+	int		drawEnd;
+	int		hit;
+}t_ray;
+
 typedef struct s_var
 {
 	t_data	*image;
-	t_vec	*vec;
+	t_vec_set	*vec;
 	t_key	*key;
 	t_frame	*frame;
 	t_map	*map;
+	t_ray 	*ray;
 } t_var;
 
 void	my_mlx_pixel_put(t_data *data, int x, int y, int color);
 void	make_new_img(t_data *image);
-void	draw_background(t_var *var, int line, t_data *image);
+void	draw_background(int line, t_data *image);
 void	draw(t_var *var);
-void	init_vec(t_vec *vec);
+void	init_vec_set(t_vec_set *vec, t_map *map);
 void	init_key(t_key *key);
 void	init_frame(t_frame *frame);
 void	move_forward(t_var *var);
@@ -120,7 +129,7 @@ void	move_left(t_var *var);
 void	move_right(t_var *var);
 void	rotate_left(t_var *var);
 void	rotate_right(t_var *var);
-void	draw_map(t_var *var, t_data *image, t_vec *vec);
+void	draw_map(t_var *var);
 int		key_press(int key_code, t_var *var);
 int		key_lift(int key_code, t_var *var);
 int		render(t_var *var);
@@ -138,5 +147,12 @@ char	**wft_split(char const *str, char c);
 char	**double_free(int i, char	**be_return);
 void	safe_free(void *ptr);
 int		ft_max(int a, int b);
+int		rgb_translate(int color);
+void	init_ray(t_ray *ray);
+void	calculate_ray_values(t_var *var, int x);
+void	calculate_side_dist(t_var *var);
+void	calculate_wall_hit_dda(t_var *var);
+void	calculate_distance_between_wall(t_var *var);
+void	calculate_draw_start_end(t_var *var);
 
 # endif

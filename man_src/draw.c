@@ -6,7 +6,7 @@
 /*   By: sumjo <sumjo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 05:11:15 by sumjo             #+#    #+#             */
-/*   Updated: 2024/02/11 05:53:47 by sumjo            ###   ########.fr       */
+/*   Updated: 2024/02/16 03:44:13 by sumjo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,24 +30,21 @@ void	make_new_img(t_data *image)
 	&image->bits_pixel, &image->line_length, &image->endian);
 }
 
-void	draw_background(t_var *var, int line, t_data *image)
+void	draw_background(int line, t_data *image)
 {
 	int	x;
 	int	y;
 
-	line += var->vec->up;
 	x = 0;
 	while (x < screenWidth)
 	{
 		y = 0;
-		while (y < screenHeight && y < line)
-		{
-			my_mlx_pixel_put(image, x, y, 0x00B0E0E6);
-			y++;
-		}
 		while (y < screenHeight)
 		{
-			my_mlx_pixel_put(image, x, y, 0x00A9A9A9);
+			if (y < line)
+				my_mlx_pixel_put(image, x, y, 0x87CEEB);
+			else
+				my_mlx_pixel_put(image, x, y, 0x228B22);
 			y++;
 		}
 		x++;
@@ -57,15 +54,13 @@ void	draw_background(t_var *var, int line, t_data *image)
 void	draw(t_var *var)
 {
 	make_new_img(var->image);
-	draw_background(var, 500, var->image);
-	draw_map(var, var->image, var->vec);
+	draw_background(screenHeight / 2, var->image);
+	draw_map(var);
 	var->frame->time = get_time();
 	var->frame->frameTime = \
 		(var->frame->time - var->frame->oldTime) / 1000000.0;
-	draw_map(var, var->image, var->vec);
 	mlx_put_image_to_window
 		(var->image->mlx, var->image->win_ptr, var->image->img, 0, 0);
-	// mlx_do_sync(var->image->mlx);
 	var->frame->oldTime = var->frame->time;
 	var->frame->moveSpeed = var->frame->frameTime * 5.0;
 	var->frame->rotSpeed = var->frame->frameTime * 3.0;
