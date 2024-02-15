@@ -6,7 +6,7 @@
 /*   By: sumjo <sumjo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 05:09:10 by sumjo             #+#    #+#             */
-/*   Updated: 2024/02/16 03:47:57 by sumjo            ###   ########.fr       */
+/*   Updated: 2024/02/16 04:54:03 by sumjo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,14 @@ void	draw_map(t_var *var)
 	}
 }
 
+void init_texture(t_texture *texture, t_map *map)
+{
+	texture->tex_path = map->no;
+	texture->texture = (int *)malloc(sizeof(int) * 64 * 64);
+	texture->width = 64;
+	texture->height = 64;
+}
+
 int main(int argc, char **argv)
 {
 	t_data image;
@@ -57,6 +65,7 @@ int main(int argc, char **argv)
 	t_var var;
 	t_map map;
 	t_ray ray;
+	t_texture texture;
 
 	init_map(argc, argv, &map);
 	init_mlx(&image);
@@ -64,12 +73,14 @@ int main(int argc, char **argv)
 	init_ray(&ray);
 	init_key(&key);
 	init_frame(&frame);
+	init_texture(&texture, &map);
 
 	var.image = &image;
 	var.vec = &vec;
 	var.key = &key;
 	var.frame = &frame;
 	var.map = &map;
+	var.ray = &ray;
 
 	mlx_hook(image.win_ptr, 2, 0, key_press, &var);
 	mlx_hook(image.win_ptr, 3, 1L << 1, key_lift, &var);

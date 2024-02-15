@@ -6,7 +6,7 @@
 /*   By: sumjo <sumjo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 05:11:15 by sumjo             #+#    #+#             */
-/*   Updated: 2024/02/16 03:44:13 by sumjo            ###   ########.fr       */
+/*   Updated: 2024/02/16 04:54:25 by sumjo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,10 +36,10 @@ void	draw_background(int line, t_data *image)
 	int	y;
 
 	x = 0;
-	while (x < screenWidth)
+	while (x < image->width)
 	{
 		y = 0;
-		while (y < screenHeight)
+		while (y < image->height)
 		{
 			if (y < line)
 				my_mlx_pixel_put(image, x, y, 0x87CEEB);
@@ -54,14 +54,14 @@ void	draw_background(int line, t_data *image)
 void	draw(t_var *var)
 {
 	make_new_img(var->image);
-	draw_background(screenHeight / 2, var->image);
+	draw_background(var->image->height / 2, var->image);
 	draw_map(var);
-	var->frame->time = get_time();
-	var->frame->frameTime = \
-		(var->frame->time - var->frame->oldTime) / 1000000.0;
+	// var->frame->time = get_time();
+	// var->frame->frameTime = \
+		// (var->frame->time - var->frame->oldTime) / 1000000.0;
 	mlx_put_image_to_window
 		(var->image->mlx, var->image->win_ptr, var->image->img, 0, 0);
-	var->frame->oldTime = var->frame->time;
-	var->frame->moveSpeed = var->frame->frameTime * 5.0;
-	var->frame->rotSpeed = var->frame->frameTime * 3.0;
+	// var->frame->oldTime = var->frame->time;
+	// var->frame->moveSpeed = var->frame->frameTime * 5.0;
+	// var->frame->rotSpeed = var->frame->frameTime * 3.0;
 }

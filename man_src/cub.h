@@ -40,6 +40,8 @@ typedef struct s_data
 	int		bits_pixel;
 	int		line_length;
 	int		endian;
+	int		width;
+	int		height;
 }t_data;
 
 typedef struct s_vec
@@ -105,6 +107,14 @@ typedef struct s_ray
 	int		drawEnd;
 	int		hit;
 }t_ray;
+
+typedef struct  s_texture
+{
+    char		*tex_path;
+    int             *texture;
+    double		width;
+    double		height;
+}t_texture;
 
 typedef struct s_var
 {
