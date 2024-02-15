@@ -6,7 +6,7 @@
 /*   By: jiko <jiko@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 00:06:24 by jiko              #+#    #+#             */
-/*   Updated: 2024/02/13 18:08:08 by jiko             ###   ########.fr       */
+/*   Updated: 2024/02/15 16:05:00 by jiko             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -174,7 +174,37 @@ static void set_map(int fd, t_map *t_map)
 		ft_exit(1, "Error\nInvalid map\n");
 	t_map->map = map;
 }
-	
+
+void dfs(t_map *map, int **visited, int x, int y)
+{
+	if (x < 0 || y < 0 || x >= map->map_height || y >= map->map_width)
+		ft_exit(1, "Error\nInvalid map\n");
+	if (map->map[x][y] == 1 || visited[x][y])
+		return;
+	if (map->map[x][y] == 2)
+		ft_exit(1, "Error\nInvalid map\n");
+	visited[x][y] = 1;
+	dfs(map, visited, x + 1, y);
+	dfs(map, visited, x - 1, y);
+	dfs(map, visited, x, y + 1);
+	dfs(map, visited, x, y - 1);
+}
+
+void dfs_valid_map(t_map *map)
+{
+	int **visited;
+
+	visited = wft_calloc(map->map_height, sizeof(int *));
+	for (int i = 0; i < map->map_height; i++)
+		visited[i] = wft_calloc(map->map_width, sizeof(int));
+	for (int i = 0; i < map->map_height; i++)
+		for (int j = 0; j < map->map_width; j++)
+		{
+			if (map->map[i][j] == 0 && !visited[i][j])
+				dfs(map, visited, i, j);
+		}
+}
+
 void init_map(int argv, char **argc, t_map *map)
 {
 	int fd;
@@ -205,5 +235,6 @@ void init_map(int argv, char **argc, t_map *map)
 		printf("\n");
 	}
 	close(fd);
+	dfs_valid_map(map);
 }
     
