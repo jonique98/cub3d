@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: josumin <josumin@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jiko <jiko@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 05:09:10 by sumjo             #+#    #+#             */
-/*   Updated: 2024/02/16 12:59:27 by josumin          ###   ########.fr       */
+/*   Updated: 2024/02/16 20:11:11 by jiko             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void init_texture(t_data *img, t_var *var)
 {
 	t_data img2;
-	img2.img = mlx_xpm_file_to_image(img->mlx, "/Users/josumin/Desktop/cub/AnyConv.com__gg.xpm", &img2.width, &img2.height);
+	img2.img = mlx_xpm_file_to_image(img->mlx, "./AnyConv.com__ins (3).xpm", &img2.width, &img2.height);
 	img2.addr_tex = (int *)mlx_get_data_addr(img2.img, &img2.bits_pixel, &img2.line_length, &img2.endian);
 	var->tex->width = img2.width;
 	var->tex->height = img2.height;
@@ -139,6 +139,6 @@ int main(int argc, char **argv)
 
 	mlx_loop_hook(image.mlx, render, &var);
 	mlx_loop(image.mlx);
-	return (0);
+	exit (0);
 }
 
