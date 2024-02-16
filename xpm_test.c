@@ -1,8 +1,5 @@
 #include "./man_src/cub.h"
 
-#define screenW 640
-#define screenH 480
-
 void init_width_height(t_data *img)
 {
 	t_data img2;
@@ -18,11 +15,16 @@ int	main(void)
 
 	img.mlx = mlx_init();
 	init_width_height(&img);
-	img.win_ptr = mlx_new_window(img.mlx, screenW, screenH, "Hello World!");
-	img.img = mlx_new_image(img.mlx, screenW, screenH);
+	img.win_ptr = mlx_new_window(img.mlx, img.width, img.height, "Hello World!");
+	img.img = mlx_xpm_file_to_image(img.mlx, "./teapot.xpm", &img.width, &img.height);
 	img.addr_tex = (int *)mlx_get_data_addr(img.img, &img.bits_pixel, &img.line_length, &img.endian);
 
-	result = texture_copy(&img);
+	for(int i = 0; i < img.width; i++){
+		for(int j = 0; j < img.height; j++){
+			printf("value: %d\n", img.addr_tex[img.width * j + i]);
+		}
+	}
+
 
 	int col = 0;
 	int row = 0;

@@ -113,8 +113,8 @@ typedef struct  s_texture
 {
     char		*tex_path;
     int         *texture;
-    double		width;
-    double		height;
+	int         width;
+	int         height;
 }t_texture;
 
 typedef struct s_var
@@ -125,7 +125,7 @@ typedef struct s_var
 	t_frame	*frame;
 	t_map	*map;
 	t_ray 	*ray;
-	t_texture 	texture[4];
+	t_texture 	*tex;
 } t_var;
 
 void	my_mlx_pixel_put(t_data *data, int x, int y, int color);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sumjo <sumjo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: josumin <josumin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 05:09:37 by sumjo             #+#    #+#             */
-/*   Updated: 2024/02/16 06:45:10 by sumjo            ###   ########.fr       */
+/*   Updated: 2024/02/16 11:02:03 by josumin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,8 @@ void init_ray(t_ray *ray)
 	ray->cameraX = 0;
 	ray->rayDir.x = 0;
 	ray->rayDir.y = 0;
+	ray->map.x = 0;
+	ray->map.y = 0;
 	ray->sideDist.x = 0;
 	ray->sideDist.y = 0;
 	ray->deltaDist.x = 0;
@@ -94,12 +96,9 @@ void init_ray(t_ray *ray)
 	ray->perpWallDist = 0;
 	ray->step.x = 0;
 	ray->step.y = 0;
-	ray->map.x = 0;
-	ray->map.y = 0;
+	ray->hit = 0;
 	ray->side = 0;
 	ray->lineHeight = 0;
 	ray->drawStart = 0;
-	ray->drawEnd = 0;
-	ray->hit = 0;
-	ray->side = 0;
+	ray->drawEnd = 0;	
 }

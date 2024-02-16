@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   util.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jiko <jiko@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: josumin <josumin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 05:12:08 by sumjo             #+#    #+#             */
-/*   Updated: 2024/02/12 04:17:08 by jiko             ###   ########.fr       */
+/*   Updated: 2024/02/16 10:15:58 by josumin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,9 +87,7 @@ int	ft_color(char *str)
 {
 	char	**s;
 	int 	color;
-	int		i;
 
-	i = 0;
 	s = wft_split(str, ',');
 	if (ft_strlen_doble(s) != 3)
 		ft_exit(1, "Error\nInvalid color\n");
