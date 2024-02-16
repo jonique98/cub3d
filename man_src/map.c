@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sumjo <sumjo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: jiko <jiko@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 00:06:24 by jiko              #+#    #+#             */
-/*   Updated: 2024/02/16 01:03:59 by sumjo            ###   ########.fr       */
+/*   Updated: 2024/02/16 20:10:24 by jiko             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -203,6 +203,7 @@ void dfs_valid_map(t_map *map)
 			if (map->map[i][j] == 0 && !visited[i][j])
 				dfs(map, visited, i, j);
 		}
+	double_free_int(map->map_height - 1, visited);
 }
 
 void init_map(int argv, char **argc, t_map *map)

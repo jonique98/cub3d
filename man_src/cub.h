@@ -159,6 +159,7 @@ int 	ft_strlen_doble(char **str);
 int		ft_color(char *str);
 char	**wft_split(char const *str, char c);
 char	**double_free(int i, char	**be_return);
+int		double_free_int(int i, int **be_return);
 void	safe_free(void *ptr);
 int		ft_max(int a, int b);
 int		rgb_translate(int color);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   util.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: josumin <josumin@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jiko <jiko@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 05:12:08 by sumjo             #+#    #+#             */
-/*   Updated: 2024/02/16 10:15:58 by josumin          ###   ########.fr       */
+/*   Updated: 2024/02/16 20:09:45 by jiko             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,14 @@ char	**double_free(int i, char	**be_return)
 		free(be_return[i--]);
 	free(be_return);
 	return (NULL);
+}
+
+int	double_free_int(int i, int **be_return)
+{
+	while (i != -1)
+		free(be_return[i--]);
+	free(be_return);
+	return (0);
 }
 
 void	*wft_calloc(int count, int size)
