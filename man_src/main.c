@@ -6,7 +6,7 @@
 /*   By: josumin <josumin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 05:09:10 by sumjo             #+#    #+#             */
-/*   Updated: 2024/02/16 11:55:00 by josumin          ###   ########.fr       */
+/*   Updated: 2024/02/16 12:59:27 by josumin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,25 +15,30 @@
 void init_texture(t_data *img, t_var *var)
 {
 	t_data img2;
-	img2.img = mlx_xpm_file_to_image(img->mlx, "/Users/josumin/Desktop/cub/colorstone.xpm", &img2.width, &img2.height);
+	img2.img = mlx_xpm_file_to_image(img->mlx, "/Users/josumin/Desktop/cub/AnyConv.com__gg.xpm", &img2.width, &img2.height);
 	img2.addr_tex = (int *)mlx_get_data_addr(img2.img, &img2.bits_pixel, &img2.line_length, &img2.endian);
 	var->tex->width = img2.width;
 	var->tex->height = img2.height;
-	var->tex->texture = (int *)ft_calloc(img2.width * img2.height, sizeof(int));
+	var->tex->texture = (int *)ft_calloc(texHeight*texWidth, sizeof(int));
 	
-	int x = 0;
-	int y = 0;
-	
-	while (y < img2.height)
-	{
-		x = 0;
-		while (x < img2.width)
-		{
-			var->tex->texture[img2.width * y + x] = img2.addr_tex[img2.width * y + x];
-			x++;
+	for(int i = 0; i < texHeight; i++){
+		for(int j = 0; j < texWidth; j++){
+			int color;
+			int height = var->tex->height;
+			int width = var->tex->width;
+			int result_row = (height * i) / texHeight;
+			int result_col = (width * j) / texWidth;
+			
+			if (result_row < 0)
+				result_row = 0;
+			if (result_col < 0)
+				result_col = 0;
+			color = img2.addr_tex[img2.width * result_row + result_col];
+			var->tex->texture[texWidth * i + j] = color;
 		}
-		y++;
 	}
+	var->tex->width = texWidth;
+	var->tex->height = texHeight;
 	mlx_destroy_image(img->mlx, img2.img);
 }
 

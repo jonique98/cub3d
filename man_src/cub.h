@@ -18,6 +18,8 @@
 
 #define screenWidth 1000
 #define screenHeight 1000
+#define texWidth 128
+#define texHeight 128
 
 typedef struct s_key
 {
