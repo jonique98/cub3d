@@ -6,7 +6,7 @@
 /*   By: jiko <jiko@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 05:09:10 by sumjo             #+#    #+#             */
-/*   Updated: 2024/02/16 20:11:11 by jiko             ###   ########.fr       */
+/*   Updated: 2024/02/24 18:35:34 by jiko             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,19 +108,15 @@ int main(int argc, char **argv)
 	t_ray ray;
 	t_texture texture;
 	
+	ft_memset(&texture, 0, sizeof(t_texture));
 	var.tex = &texture;
-
-	var.tex->tex_path = 0;
-	var.tex->texture = 0;
-	var.tex->width = 0;
-	var.tex->height = 0;
 
 	init_map(argc, argv, &map);
 	init_mlx(&image);
 	init_texture(&image, &var);
 	init_vec_set(&vec, &map);
-	init_ray(&ray);
-	init_key(&key);
+	ft_memset(&ray, 0, sizeof(t_ray));
+	ft_memset(&key, 0, sizeof(t_key));
 	init_frame(&frame);
 	
 	printf("tex width: %d\n", var.tex->width);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: josumin <josumin@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jiko <jiko@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 05:09:37 by sumjo             #+#    #+#             */
-/*   Updated: 2024/02/16 11:02:03 by josumin          ###   ########.fr       */
+/*   Updated: 2024/02/24 18:36:14 by jiko             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,56 +14,35 @@
 
 void	init_vec_set(t_vec_set *vec, t_map *map)
 {
-	vec->up = 0;
+	ft_memset(vec, 0, sizeof(t_vec_set));
 	vec->pos.x = map->player_x;
 	vec->pos.y = map->player_y;
 	if (map->player_dir == 'N')
 	{
 		vec->dir.x = -1;
-		vec->dir.y = 0;
-		vec->plane.x = 0;
 		vec->plane.y = 0.66;
 	}
 	else if (map->player_dir == 'S')
 	{
 		vec->dir.x = 1;
-		vec->dir.y = 0;
-		vec->plane.x = 0;
 		vec->plane.y = -0.66;
 	}
 	else if (map->player_dir == 'W')
 	{
-		vec->dir.x = 0;
 		vec->dir.y = -1;
 		vec->plane.x = -0.66;
-		vec->plane.y = 0;
 	}
 	else if (map->player_dir == 'E')
 	{
-		vec->dir.x = 0;
 		vec->dir.y = 1;
 		vec->plane.x = 0.66;
-		vec->plane.y = 0;
 	}
-}
-
-void	init_key(t_key *key)
-{
-	key->left_rotate = 0;
-	key->right_rotate = 0;
-	key->left = 0;
-	key->right = 0;
-	key->forward = 0;
-	key->backward = 0;
-	key->up = 0;
-	key->down = 0;
 }
 
 void	init_frame(t_frame *frame)
 {
-	frame->time = 0;
+	ft_memset(frame, 0, sizeof(t_frame));
 	frame->oldTime = get_time();
-	frame->frameTime = 0;
 	frame->moveSpeed = 0.08;
 	frame->rotSpeed = 0.05;
 }
@@ -81,24 +60,4 @@ void	init_mlx(t_data *image)
 		(image->img, &image->bits_pixel, &image->line_length, &image->endian);
 	image->width = screenWidth;
 	image->height = screenHeight;
-}
-void init_ray(t_ray *ray)
-{
-	ray->cameraX = 0;
-	ray->rayDir.x = 0;
-	ray->rayDir.y = 0;
-	ray->map.x = 0;
-	ray->map.y = 0;
-	ray->sideDist.x = 0;
-	ray->sideDist.y = 0;
-	ray->deltaDist.x = 0;
-	ray->deltaDist.y = 0;
-	ray->perpWallDist = 0;
-	ray->step.x = 0;
-	ray->step.y = 0;
-	ray->hit = 0;
-	ray->side = 0;
-	ray->lineHeight = 0;
-	ray->drawStart = 0;
-	ray->drawEnd = 0;	
 }
