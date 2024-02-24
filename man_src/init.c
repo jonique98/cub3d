@@ -6,7 +6,7 @@
 /*   By: jiko <jiko@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 05:09:37 by sumjo             #+#    #+#             */
-/*   Updated: 2024/02/24 18:36:14 by jiko             ###   ########.fr       */
+/*   Updated: 2024/02/24 20:25:18 by jiko             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,8 @@
 void	init_vec_set(t_vec_set *vec, t_map *map)
 {
 	ft_memset(vec, 0, sizeof(t_vec_set));
-	vec->pos.x = map->player_x;
-	vec->pos.y = map->player_y;
+	vec->pos.x = map->player_x + 0.02;
+	vec->pos.y = map->player_y + 0.02;
 	if (map->player_dir == 'N')
 	{
 		vec->dir.x = -1;

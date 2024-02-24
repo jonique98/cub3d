@@ -1,0 +1,8 @@
+{
+	"files.associations": {
+		"bitset": "c",
+		"cstdio": "c",
+		"string": "c",
+		"string_view": "c"
+	}
+}
