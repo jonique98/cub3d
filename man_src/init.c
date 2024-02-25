@@ -6,7 +6,7 @@
 /*   By: jiko <jiko@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 05:09:37 by sumjo             #+#    #+#             */
-/*   Updated: 2024/02/24 20:25:18 by jiko             ###   ########.fr       */
+/*   Updated: 2024/02/26 02:31:58 by jiko             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,9 +51,9 @@ void	init_mlx(t_data *image)
 {
 	image->mlx = mlx_init();
 	image->win_ptr = \
-		mlx_new_window(image->mlx, screenHeight, screenWidth, "Hellow World!");
+		mlx_new_window(image->mlx, screenWidth, screenHeight, "Hellow World!");
 	image->img = \
-		mlx_new_image(image->mlx, screenHeight, screenWidth);
+		mlx_new_image(image->mlx, screenWidth, screenHeight);
 	image->addr = mlx_get_data_addr
 		(image->img, &image->bits_pixel, &image->line_length, &image->endian);
 	image->addr_tex = (int *)mlx_get_data_addr
