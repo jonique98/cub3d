@@ -2,7 +2,8 @@ CC = gcc
 FLAGS =  -L./ -lmlx -framework OpenGL -framework Appkit -lz
 CFLAGS = -Wall -Wextra -Werror
 LIBFTFLAG	= -Llibft -lft
-SRC_NAME =  main draw hooks init move rotate util map get_next_line wft_substr_strdup wft_split hex_util calculate
+SRC_NAME =  main draw hooks init move rotate util map get_next_line wft_substr_strdup wft_split hex_util calculate \
+draw_util
 RMF = rm -f
 
 MAN_DIR = ./man_src/

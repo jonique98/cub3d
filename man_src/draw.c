@@ -6,7 +6,7 @@
 /*   By: jiko <jiko@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 05:11:15 by sumjo             #+#    #+#             */
-/*   Updated: 2024/02/24 20:11:14 by jiko             ###   ########.fr       */
+/*   Updated: 2024/02/26 02:22:28 by jiko             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,12 +51,41 @@ void	draw_background(int line, t_data *image)
 	}
 }
 
+void	draw_minimap(t_var *var, int size)
+{
+	int tmp_x;
+	int tmp_y;
+	int i;
+	int j;
+
+	i = -size;
+	while (i <= size)
+	{
+		j = -size;
+		while (j <= size)
+		{
+			tmp_x = var->vec->pos.x + i;
+			tmp_y = var->vec->pos.y + j;
+			if (tmp_x >= 0 && tmp_x < var->map->map_width && tmp_y >= 0 && tmp_y < var->map->map_height)
+				if (var->map->map[tmp_y][tmp_x] == 1)
+					draw_square(var->image, (i + size) * size, (j + size) * size, size, 0x000000);
+				else
+					draw_square(var->image, (i + size) * size, (j + size) * size, size, 0xFFFFFF);
+			else
+				draw_square(var->image, (i + size) * size, (j + size) * size, size, 0x000000);
+			j++;
+		}
+		i++;
+	}
+	draw_square(var->image, size * size, size * size, size, 0xFF0000);
+}
+
 void	draw(t_var *var)
 {
 	make_new_img(var->image);
 	draw_background(var->image->height / 2, var->image);
 	draw_map(var);
-	// draw_minimap(var);
+	draw_minimap(var, 10);
 	// var->frame->time = get_time();
 	// var->frame->frameTime = \
 		// (var->frame->time - var->frame->oldTime) / 1000000.0;

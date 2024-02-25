@@ -6,7 +6,7 @@
 /*   By: jiko <jiko@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 05:09:10 by sumjo             #+#    #+#             */
-/*   Updated: 2024/02/24 18:35:34 by jiko             ###   ########.fr       */
+/*   Updated: 2024/02/26 00:24:01 by jiko             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,7 +128,6 @@ int main(int argc, char **argv)
 	var.frame = &frame;
 	var.map = &map;
 	var.ray = &ray;
-	
 
 	mlx_hook(image.win_ptr, 2, 0, key_press, &var);
 	mlx_hook(image.win_ptr, 3, 1L << 1, key_lift, &var);

@@ -169,5 +169,6 @@ void	calculate_side_dist(t_var *var);
 void	calculate_wall_hit_dda(t_var *var);
 void	calculate_distance_between_wall(t_var *var);
 void	calculate_draw_start_end(t_var *var);
+void	draw_square(t_data *img, int x, int y, int size, int color);
 
 # endif
