@@ -31,6 +31,10 @@ typedef struct s_key
 	int	backward;
 	int	up;
 	int	down;
+	int mouse_x;
+	int mouse_y;
+	int old_mouse_x;
+	int old_mouse_y;
 }t_key;
 
 typedef struct s_data
@@ -181,5 +185,9 @@ void	calculate_wall_hit_dda(t_var *var);
 void	calculate_distance_between_wall(t_var *var);
 void	calculate_draw_start_end(t_var *var);
 void	draw_square(t_data *img, int x, int y, int size, int color);
+void	copy_texture(t_data *img, t_var *var, int idx);
+void	init_texture_direction(char *path, t_data *img, t_var *var, int idx);
+void	init_texture(t_data *img, t_var *var);
+void	texture_mapping(t_var *var);
 
 # endif

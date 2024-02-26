@@ -6,7 +6,7 @@
 /*   By: sumjo <sumjo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 05:12:32 by sumjo             #+#    #+#             */
-/*   Updated: 2024/02/16 01:56:30 by sumjo            ###   ########.fr       */
+/*   Updated: 2024/02/27 06:23:30 by sumjo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ int	key_lift(int key_code, t_var *var)
 
 void look_up(t_var *var)
 {
-	if(var->vec->up < 100)
+	if (var->vec->up < 100)
 	var->vec->up += 10;
 }
 
@@ -86,6 +86,12 @@ int	render(t_var *var)
 		look_up(var);
 	if (var->key->down)
 		look_down(var);
+
+	int dx = var->key->mouse_x - var->image->width / 2;	
+	if(dx > 600)
+		rotate_right(var);
+	else if(dx < -600)
+		rotate_left(var);
 	draw(var);
 	return (0);
 }
