@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   calculate.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: josumin <josumin@student.42.fr>            +#+  +:+       +#+        */
+/*   By: sumjo <sumjo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/16 03:18:08 by sumjo             #+#    #+#             */
-/*   Updated: 2024/02/16 11:23:00 by josumin          ###   ########.fr       */
+/*   Updated: 2024/02/27 06:30:48 by sumjo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,8 +43,10 @@ void	calculate_side_dist(t_var *var)
 void calculate_ray_values(t_var *var, int x)
 {
 	var->ray->cameraX = 2 * x / (double)screenWidth - 1;
-	var->ray->rayDir.x = var->vec->dir.x + var->vec->plane.x * var->ray->cameraX;
-	var->ray->rayDir.y = var->vec->dir.y + var->vec->plane.y * var->ray->cameraX;
+	var->ray->rayDir.x = var->vec->dir.x + \
+	var->vec->plane.x * var->ray->cameraX;
+	var->ray->rayDir.y = var->vec->dir.y + \
+	var->vec->plane.y * var->ray->cameraX;
 	var->ray->map.x = (int)var->vec->pos.x;
 	var->ray->map.y = (int)var->vec->pos.y;
 	var->ray->deltaDist.x = fabs(1 / var->ray->rayDir.x);

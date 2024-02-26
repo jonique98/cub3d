@@ -6,7 +6,7 @@
 /*   By: sumjo <sumjo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/16 02:45:30 by sumjo             #+#    #+#             */
-/*   Updated: 2024/02/16 02:55:09 by sumjo            ###   ########.fr       */
+/*   Updated: 2024/02/27 06:31:22 by sumjo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 
 int	rgb_translate(int color)
 {
-	int r;
-	int g;
-	int b;
+	int	r;
+	int	g;
+	int	b;
 
 	r = (color >> 16) & 0xFF;
 	g = (color >> 8) & 0xFF;

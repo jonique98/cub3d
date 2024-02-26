@@ -3,20 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   draw_util.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jiko <jiko@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: sumjo <sumjo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/26 00:29:58 by jiko              #+#    #+#             */
-/*   Updated: 2024/02/26 01:03:21 by jiko             ###   ########.fr       */
+/*   Updated: 2024/02/27 06:30:54 by sumjo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub.h"
 
-void draw_square(t_data *img, int x, int y, int size, int color)
+void	draw_square(t_data *img, int x, int y, int size, int color)
 {
-	int i;
-	int j;
-	
+	int	i;
+	int	j;
+
 	i = 0;
 	while (i < size)
 	{
