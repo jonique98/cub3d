@@ -6,7 +6,7 @@
 /*   By: sumjo <sumjo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 05:09:10 by sumjo             #+#    #+#             */
-/*   Updated: 2024/02/27 06:26:09 by sumjo            ###   ########.fr       */
+/*   Updated: 2024/02/27 06:28:27 by sumjo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,6 +106,8 @@ int main(int argc, char **argv)
 
 	mlx_hook(image.win_ptr, 2, 0, key_press, &var);
 	mlx_hook(image.win_ptr, 3, 1L << 1, key_lift, &var);
+
+	//마우스 시점변경
 	// mlx_hook(image.win_ptr, 6, 0, mouse_event_draw, &var);
 
 	mlx_loop_hook(image.mlx, render, &var);
