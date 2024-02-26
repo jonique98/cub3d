@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jiko <jiko@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: sumjo <sumjo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 05:09:37 by sumjo             #+#    #+#             */
-/*   Updated: 2024/02/26 02:31:58 by jiko             ###   ########.fr       */
+/*   Updated: 2024/02/27 00:48:35 by sumjo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,8 +43,8 @@ void	init_frame(t_frame *frame)
 {
 	ft_memset(frame, 0, sizeof(t_frame));
 	frame->oldTime = get_time();
-	frame->moveSpeed = 0.08;
-	frame->rotSpeed = 0.05;
+	frame->moveSpeed = 0.1;
+	frame->rotSpeed = 0.07;
 }
 
 void	init_mlx(t_data *image)

@@ -16,8 +16,8 @@
 # include <sys/time.h>
 # include <fcntl.h>
 
-#define screenWidth 1000
-#define screenHeight 1000
+#define screenWidth 1920
+#define screenHeight 1080
 #define texWidth 128
 #define texHeight 128
 
@@ -119,6 +119,16 @@ typedef struct  s_texture
 	int         height;
 }t_texture;
 
+typedef struct s_texture_var
+{
+	double	wallx;
+	int		texX;
+	double	step;
+	double	texPos;
+	int		texY;
+	int		direction;
+}t_texture_var;
+
 typedef struct s_var
 {
 	t_data	*image;
@@ -127,7 +137,8 @@ typedef struct s_var
 	t_frame	*frame;
 	t_map	*map;
 	t_ray 	*ray;
-	t_texture 	*tex;
+	t_texture 	tex[4];
+	t_texture_var	tex_var;
 } t_var;
 
 void	my_mlx_pixel_put(t_data *data, int x, int y, int color);
