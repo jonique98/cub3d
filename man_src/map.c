@@ -6,15 +6,15 @@
 /*   By: jiko <jiko@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 00:06:24 by jiko              #+#    #+#             */
-/*   Updated: 2024/02/16 20:10:24 by jiko             ###   ########.fr       */
+/*   Updated: 2024/02/27 17:28:53 by jiko             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub.h"
 
-static int open_cube(int argc, char **argv, t_map *map)
+static int	open_cube(int argc, char **argv, t_map *map)
 {
-	int fd;
+	int	fd;
 
 	if (argc != 2)
 		ft_exit(1, "Error\nInvalid number of arguments\n");
@@ -27,19 +27,20 @@ static int open_cube(int argc, char **argv, t_map *map)
 	return (fd);
 }
 
-static int is_param_full(t_map *map)
+static int	is_param_full(t_map *map)
 {
-	return (map->no && map->so && map->we && map->ea && map->floor && map->ceiling);
+	return (map->no && map->so && map->we \
+	&& map->ea && map->floor && map->ceiling);
 }
 
-static int is_map(char *line)
+static int	is_map(char *line)
 {
-	int i;
-	
+	int	i;
+
 	i = 0;
 	while (line[i])
 	{
-		if (line[i] != '1' && line[i] != '0' && line[i] != 'S' && line[i] != 'N' 
+		if (line[i] != '1' && line[i] != '0' && line[i] != 'S' && line[i] != 'N'\
 		&& line[i] != 'W' && line[i] != 'E' && line[i] != ' ')
 			return (0);
 		i++;
@@ -47,26 +48,26 @@ static int is_map(char *line)
 	return (1);
 }
 
-static void remove_space_side(char **line, t_map *map)
+static void	remove_space_side(char **line, t_map *map)
 {
-	int i;
-	int len;
-	char *tmp;
+	int		i;
+	int		len;
+	char	*tmp;
 
 	i = 0;
 	if (!(*line))
-		return;
+		return ;
 	tmp = (*line);
 	len = ft_strlen((*line));
 	if (len == 0)
-		return;
+		return ;
 	while (!is_param_full(map) && (*line)[i] == ' ')
 		i++;
 	if (len == i)
 	{
 		free(*line);
 		*line = wft_calloc(1, sizeof(char));
-		return;
+		return ;
 	}
 	while ((*line)[len - 1] == ' ')
 		len--;
@@ -74,17 +75,17 @@ static void remove_space_side(char **line, t_map *map)
 	free(tmp);
 }
 
-static void set_param(int fd, t_map *map)
+static void	set_param(int fd, t_map *map)
 {
-	char *line;
-	char **s;
-	int ret;
+	char	*line;
+	char	**s;
+	int		ret;
 
 	while ((ret = get_next_line(fd, &line)) > 0)
 	{
 		map->map_start++;
 		remove_space_side(&line, map);
-		if (line==NULL || line[0] == '\0')
+		if (line == NULL || line[0] == '\0')
 		{
 			if (is_param_full(map) && map->map_height)
 			{
@@ -92,7 +93,7 @@ static void set_param(int fd, t_map *map)
 				map->map_flag = 1;
 			}
 			safe_free(line);
-			continue;
+			continue ;
 		}
 		s = wft_split(line, ' ');
 		if (!ft_strncmp(s[0], "NO", 3) || !ft_strncmp(s[0], "SO", 3) || !ft_strncmp(s[0], "WE", 3)\
@@ -134,8 +135,8 @@ static void set_param(int fd, t_map *map)
 //for -> while바꾸기//for -> while바꾸기//for -> while바꾸기//for -> while바꾸기//for -> while바꾸기
 static void set_map(int fd, t_map *t_map)
 {
-	int **map;
-	char *line;
+	int		**map;
+	char	*line;
 
 	map = wft_calloc(t_map->map_height, sizeof(int *));
 	for (int i = 0; i < t_map->map_height; i++) 
@@ -180,7 +181,7 @@ void dfs(t_map *map, int **visited, int x, int y)
 	if (x < 0 || y < 0 || x >= map->map_height || y >= map->map_width)
 		ft_exit(1, "Error\nInvalid map\n");
 	if (map->map[x][y] == 1 || visited[x][y])
-		return;
+		return ;
 	if (map->map[x][y] == 2)
 		ft_exit(1, "Error\nInvalid map\n");
 	visited[x][y] = 1;
@@ -190,26 +191,33 @@ void dfs(t_map *map, int **visited, int x, int y)
 	dfs(map, visited, x, y - 1);
 }
 
-void dfs_valid_map(t_map *map)
+void	dfs_valid_map(t_map *map)
 {
-	int **visited;
+	int	**visited;
+	int	i;
+	int	j;
 
 	visited = wft_calloc(map->map_height, sizeof(int *));
-	for (int i = 0; i < map->map_height; i++)
+	i = -1;
+	while (++i < map->map_height)
 		visited[i] = wft_calloc(map->map_width, sizeof(int));
-	for (int i = 0; i < map->map_height; i++)
-		for (int j = 0; j < map->map_width; j++)
+	i = -1;
+	while (++i < map->map_height)
+	{
+		j = -1;
+		while (++j < map->map_width)
 		{
 			if (map->map[i][j] == 0 && !visited[i][j])
 				dfs(map, visited, i, j);
 		}
+	}
 	double_free_int(map->map_height - 1, visited);
 }
 
 void init_map(int argv, char **argc, t_map *map)
 {
-	int fd;
-	
+	int	fd;
+
 	fd = open_cube(argv, argc, map);
 	set_param(fd, map);
 	close(fd);
@@ -217,24 +225,6 @@ void init_map(int argv, char **argc, t_map *map)
 		ft_exit(1, "Error\nInvalid map\n");
 	fd = open(argc[1], O_RDONLY);
 	set_map(fd, map);
-	printf("no : %s\n", map->no);
-	printf("so : %s\n", map->so);
-	printf("we : %s\n", map->we);
-	printf("ea : %s\n", map->ea);
-	printf("floor : %X\n", map->floor);
-	printf("ceiling : %X\n", map->ceiling);
-	printf("map_width : %d\n", map->map_width);
-	printf("map_height : %d\n", map->map_height);
-	printf("player_x : %d\n", map->player_x);
-	printf("player_y : %d\n", map->player_y);
-	printf("player_dir : %c\n", map->player_dir);
-	printf("map->map_start : %d\n", map->map_start);
-	for (int i = 0; i < map->map_height; i++)
-	{
-		for (int j = 0; j < map->map_width; j++)
-			printf("%d", map->map[i][j]);
-		printf("\n");
-	}
 	close(fd);
 	dfs_valid_map(map);
 }
