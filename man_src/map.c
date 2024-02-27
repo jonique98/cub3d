@@ -6,26 +6,11 @@
 /*   By: jiko <jiko@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 00:06:24 by jiko              #+#    #+#             */
-/*   Updated: 2024/02/27 17:54:04 by jiko             ###   ########.fr       */
+/*   Updated: 2024/02/27 18:21:52 by jiko             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub.h"
-
-static int	is_map(char *line)
-{
-	int	i;
-
-	i = 0;
-	while (line[i])
-	{
-		if (line[i] != '1' && line[i] != '0' && line[i] != 'S' && line[i] != 'N'\
-		&& line[i] != 'W' && line[i] != 'E' && line[i] != ' ')
-			return (0);
-		i++;
-	}
-	return (1);
-}
 
 static void	remove_space_side(char **line, t_map *map)
 {
@@ -54,58 +39,81 @@ static void	remove_space_side(char **line, t_map *map)
 	free(tmp);
 }
 
+static void	set_param_if_char(t_map *map, char **s)
+{
+	if (!ft_strncmp(s[0], "NO", 3) && !map->no)
+		map->no = wft_strdup(s[1]);
+	else if (!ft_strncmp(s[0], "SO", 3) && !map->so)
+		map->so = wft_strdup(s[1]);
+	else if (!ft_strncmp(s[0], "WE", 3) && !map->we)
+		map->we = wft_strdup(s[1]);
+	else if (!ft_strncmp(s[0], "EA", 3) && !map->ea)
+		map->ea = wft_strdup(s[1]);
+	else if (!ft_strncmp(s[0], "F", 2) && !map->floor)
+		map->floor = ft_color(s[1]);
+	else if (!ft_strncmp(s[0], "C", 2) && !map->ceiling)
+		map->ceiling = ft_color(s[1]);
+	else
+		ft_exit(1, "Error\nInvalid parameter\n");
+}
+
+static void	set_param_elif_char(t_map *map, char *line)
+{
+	map->map_start--;
+	if (map->map_flag)
+		ft_exit(1, "Error\nInvalid map\n");
+	map->map_height++;
+	map->map_width = ft_max(map->map_width, ft_strlen(line));
+}
+
+static void	set_param_if_null(char *line, t_map *map)
+{
+	if (is_param_full(map) && map->map_height)
+	{
+		map->map_start--;
+		map->map_flag = 1;
+	}
+	safe_free(line);
+}
+
+static int	check_valid_string(char **s)
+{
+	if (!ft_strncmp(s[0], "NO", 3) || !ft_strncmp(s[0], "SO", 3)
+		|| !ft_strncmp(s[0], "WE", 3) || !ft_strncmp(s[0], "EA", 3)
+		|| !ft_strncmp(s[0], "F", 2) || !ft_strncmp(s[0], "C", 2))
+		return (1);
+}
+
+static void	if_check_vaild_string(char **s, t_map *map, char *line)
+{
+	if (check_valid_string(s))
+		set_param_if_char(map, s);
+	else if (is_param_full(map) && is_map(line))
+		set_param_elif_char(map, line);
+	else
+		ft_exit(1, "Error\nInvalid parameter\n");
+}
+
 static void	set_param(int fd, t_map *map)
 {
 	char	*line;
 	char	**s;
 	int		ret;
 
-	while ((ret = get_next_line(fd, &line)) > 0)
+	while (42)
 	{
+		ret = get_next_line(fd, &line);
+		if (ret <= 0)
+			break ;
 		map->map_start++;
 		remove_space_side(&line, map);
 		if (line == NULL || line[0] == '\0')
 		{
-			if (is_param_full(map) && map->map_height)
-			{
-				map->map_start--;
-				map->map_flag = 1;
-			}
-			safe_free(line);
+			set_param_if_null(line, map);
 			continue ;
 		}
 		s = wft_split(line, ' ');
-		if (!ft_strncmp(s[0], "NO", 3) || !ft_strncmp(s[0], "SO", 3)
-			|| !ft_strncmp(s[0], "WE", 3) || !ft_strncmp(s[0], "EA", 3)
-			|| !ft_strncmp(s[0], "F", 2) || !ft_strncmp(s[0], "C", 2))
-		{
-			if (ft_strlen_doble(s) != 2)
-				ft_exit(1, "Error\nInvalid parameter\n");
-			if (!ft_strncmp(s[0], "NO", 3) && !map->no)
-				map->no = wft_strdup(s[1]);
-			else if (!ft_strncmp(s[0], "SO", 3) && !map->so)
-				map->so = wft_strdup(s[1]);
-			else if (!ft_strncmp(s[0], "WE", 3) && !map->we)
-				map->we = wft_strdup(s[1]);
-			else if (!ft_strncmp(s[0], "EA", 3) && !map->ea)
-				map->ea = wft_strdup(s[1]);
-			else if (!ft_strncmp(s[0], "F", 2) && !map->floor)
-				map->floor = ft_color(s[1]);
-			else if (!ft_strncmp(s[0], "C", 2) && !map->ceiling)
-				map->ceiling = ft_color(s[1]);
-			else
-				ft_exit(1, "Error\nInvalid parameter\n");
-		}
-		else if (is_param_full(map) && is_map(line))
-		{
-			map->map_start--;
-			if (map->map_flag)
-				ft_exit(1, "Error\nInvalid map\n");
-			map->map_height++;
-			map->map_width = ft_max(map->map_width, ft_strlen(line));
-		}
-		else
-			ft_exit(1, "Error\nInvalid parameter\n");
+		if_check_vaild_string(s, map, line);
 		free(line);
 		double_free(ft_strlen_doble(s), s);
 	}

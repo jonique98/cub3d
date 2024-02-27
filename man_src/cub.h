@@ -195,7 +195,6 @@ void	dfs_valid_map(t_map *map);
 int		is_param_full(t_map *map);
 int		ft_color_atoi(char *str);
 int		ft_color(char *str);
-
-
+int		is_map(char *line);
 
 #endif

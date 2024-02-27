@@ -6,7 +6,7 @@
 /*   By: jiko <jiko@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 17:31:37 by jiko              #+#    #+#             */
-/*   Updated: 2024/02/27 17:40:53 by jiko             ###   ########.fr       */
+/*   Updated: 2024/02/27 18:22:04 by jiko             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,4 +64,19 @@ int	ft_color(char *str)
 		| ft_color_atoi(s[2]);
 	double_free(2, s);
 	return (color);
+}
+
+int	is_map(char *line)
+{
+	int	i;
+
+	i = 0;
+	while (line[i])
+	{
+		if (line[i] != '1' && line[i] != '0' && line[i] != 'S' && line[i] != 'N'\
+		&& line[i] != 'W' && line[i] != 'E' && line[i] != ' ')
+			return (0);
+		i++;
+	}
+	return (1);
 }
