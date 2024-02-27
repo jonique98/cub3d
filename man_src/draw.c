@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   draw.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jiko <jiko@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: josumin <josumin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 05:11:15 by sumjo             #+#    #+#             */
-/*   Updated: 2024/02/27 17:34:03 by jiko             ###   ########.fr       */
+/*   Updated: 2024/02/27 19:04:08 by josumin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,11 +87,11 @@ void	draw(t_var *var)
 	draw_map(var);
 	draw_minimap(var, 10);
 	// var->frame->time = get_time();
-	// var->frame->frameTime = \
-		// (var->frame->time - var->frame->oldTime) / 1000000.0;
+	// var->frame->frame_time = \
+		// (var->frame->time - var->frame->old_time) / 1000000.0;
 	mlx_put_image_to_window
 		(var->image->mlx, var->image->win_ptr, var->image->img, 0, 0);
-	// var->frame->oldTime = var->frame->time;
-	// var->frame->moveSpeed = var->frame->frameTime * 5.0;
-	// var->frame->rotSpeed = var->frame->frameTime * 3.0;
+	// var->frame->old_time = var->frame->time;
+	// var->frame->move_speed = var->frame->frame_time * 5.0;
+	// var->frame->rot_speed = var->frame->frame_time * 3.0;
 }

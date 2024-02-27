@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   texture.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jiko <jiko@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: josumin <josumin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 05:32:22 by sumjo             #+#    #+#             */
-/*   Updated: 2024/02/27 17:34:22 by jiko             ###   ########.fr       */
+/*   Updated: 2024/02/27 18:48:02 by josumin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,8 @@ void	init_texture_direction(char *path, t_data *img, t_var *var, int idx)
 {
 	t_data	img2;
 
-	var->tex[idx].texture = (int *)ft_calloc(TEXTHEIGHT * TEXTWIDTH, sizeof(int));
+	var->tex[idx].texture = (int *)ft_calloc \
+	(TEXTHEIGHT * TEXTWIDTH, sizeof(int));
 	img2.img = mlx_xpm_file_to_image(img->mlx, path, &img2.width, &img2.height);
 	if (!img2.img)
 		ft_exit(1, "Error\nFailed to open xmp\n");
@@ -65,18 +66,18 @@ void	init_texture(t_data *img, t_var *var)
 void	texture_mapping(t_var *var)
 {
 	double	wallx;
-	int		texX;
+	int		tex_x;
 
 	if (var->ray->side == 0)
-		wallx = var->vec->pos.y + var->ray->perpWallDist * var->ray->rayDir.y;
+		wallx = var->vec->pos.y + var->ray->perpwall_dist * var->ray->ray_dir.y;
 	else
-		wallx = var->vec->pos.x + var->ray->perpWallDist * var->ray->rayDir.x;
+		wallx = var->vec->pos.x + var->ray->perpwall_dist * var->ray->ray_dir.x;
 	wallx -= floor((wallx));
-	texX = (int)(wallx * (double)var->tex->width);
-	if (var->ray->side == 0 && var->ray->rayDir.x > 0)
-		texX = var->tex->width - texX - 1;
-	if (var->ray->side == 1 && var->ray->rayDir.y < 0)
-		texX = var->tex->width - texX - 1;
+	tex_x = (int)(wallx * (double)var->tex->width);
+	if (var->ray->side == 0 && var->ray->ray_dir.x > 0)
+		tex_x = var->tex->width - tex_x - 1;
+	if (var->ray->side == 1 && var->ray->ray_dir.y < 0)
+		tex_x = var->tex->width - tex_x - 1;
 	var->tex_var.wallx = wallx;
-	var->tex_var.texX = texX;
+	var->tex_var.tex_x = tex_x;
 }

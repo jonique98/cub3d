@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jiko <jiko@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: josumin <josumin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 05:09:37 by sumjo             #+#    #+#             */
-/*   Updated: 2024/02/27 17:34:03 by jiko             ###   ########.fr       */
+/*   Updated: 2024/02/27 19:04:08 by josumin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,12 +39,44 @@ void	init_vec_set(t_vec_set *vec, t_map *map)
 	}
 }
 
+void	init1(t_var *var)
+{
+	t_data		*image;
+	t_vec_set	*vec;
+	t_frame		*frame;
+
+	image = ft_calloc(1, sizeof(t_data));
+	vec = ft_calloc(1, sizeof(t_vec_set));
+	frame = ft_calloc(1, sizeof(t_frame));
+
+	init_mlx(image);
+	var->image = image;
+	init_texture(image, var);
+	init_vec_set(vec, var->map);
+	init_frame(frame);
+	var->vec = vec;
+	var->frame = frame;
+}
+
+void	init2(t_var *var)
+{
+	t_key		*key;
+	t_ray		*ray;
+
+	key = ft_calloc(1, sizeof(t_key));
+	ray = ft_calloc(1, sizeof(t_ray));
+	key->mouse_x = SCREENWIDTH / 2;
+	key->mouse_y = SCREENHEIGHT / 2;
+	var->key = key;
+	var->ray = ray;
+}
+
 void	init_frame(t_frame *frame)
 {
 	ft_memset(frame, 0, sizeof(t_frame));
-	frame->oldTime = get_time();
-	frame->moveSpeed = 0.1;
-	frame->rotSpeed = 0.07;
+	frame->old_time = get_time();
+	frame->move_speed = 0.1;
+	frame->rot_speed = 0.07;
 }
 
 void	init_mlx(t_data *image)

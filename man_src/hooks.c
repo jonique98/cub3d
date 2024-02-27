@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   hooks.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sumjo <sumjo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: josumin <josumin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 05:12:32 by sumjo             #+#    #+#             */
-/*   Updated: 2024/02/27 06:23:30 by sumjo            ###   ########.fr       */
+/*   Updated: 2024/02/27 18:55:51 by josumin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,18 +56,6 @@ int	key_lift(int key_code, t_var *var)
 	return (0);
 }
 
-void look_up(t_var *var)
-{
-	if (var->vec->up < 100)
-	var->vec->up += 10;
-}
-
-void look_down(t_var *var)
-{
-	if (var->vec->up > -1)
-		var->vec->up -= 10;
-}
-
 int	render(t_var *var)
 {
 	if (var->key->left_rotate)
@@ -82,16 +70,13 @@ int	render(t_var *var)
 		move_forward(var);
 	if (var->key->backward)
 		move_backward(var);
-	if (var->key->up)
-		look_up(var);
-	if (var->key->down)
-		look_down(var);
-
-	int dx = var->key->mouse_x - var->image->width / 2;	
-	if(dx > 600)
-		rotate_right(var);
-	else if(dx < -600)
-		rotate_left(var);
+	if (var->key->mouse_press == 1)
+	{
+		if (var->key->mouse_x - var->image->width / 2 > 1000)
+			rotate_right(var);
+		else if (var->key->mouse_x - var->image->width / 2 < -1000)
+			rotate_left(var);
+	}
 	draw(var);
 	return (0);
 }
