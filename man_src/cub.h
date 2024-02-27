@@ -196,5 +196,8 @@ int		is_param_full(t_map *map);
 int		ft_color_atoi(char *str);
 int		ft_color(char *str);
 int		is_map(char *line);
+void	remove_space_side(char **line, t_map *map);
+void	set_param_if_char(t_map *map, char **s);
+void	set_param_elif_char(t_map *map, char *line);
 
 #endif

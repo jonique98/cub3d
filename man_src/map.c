@@ -6,65 +6,11 @@
 /*   By: jiko <jiko@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 00:06:24 by jiko              #+#    #+#             */
-/*   Updated: 2024/02/27 18:24:04 by jiko             ###   ########.fr       */
+/*   Updated: 2024/02/27 18:26:29 by jiko             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub.h"
-
-static void	remove_space_side(char **line, t_map *map)
-{
-	int		i;
-	int		len;
-	char	*tmp;
-
-	i = 0;
-	if (!(*line))
-		return ;
-	tmp = (*line);
-	len = ft_strlen((*line));
-	if (len == 0)
-		return ;
-	while (!is_param_full(map) && (*line)[i] == ' ')
-		i++;
-	if (len == i)
-	{
-		free(*line);
-		*line = wft_calloc(1, sizeof(char));
-		return ;
-	}
-	while ((*line)[len - 1] == ' ')
-		len--;
-	*line = wft_substr(*line, i, len - i);
-	free(tmp);
-}
-
-static void	set_param_if_char(t_map *map, char **s)
-{
-	if (!ft_strncmp(s[0], "NO", 3) && !map->no)
-		map->no = wft_strdup(s[1]);
-	else if (!ft_strncmp(s[0], "SO", 3) && !map->so)
-		map->so = wft_strdup(s[1]);
-	else if (!ft_strncmp(s[0], "WE", 3) && !map->we)
-		map->we = wft_strdup(s[1]);
-	else if (!ft_strncmp(s[0], "EA", 3) && !map->ea)
-		map->ea = wft_strdup(s[1]);
-	else if (!ft_strncmp(s[0], "F", 2) && !map->floor)
-		map->floor = ft_color(s[1]);
-	else if (!ft_strncmp(s[0], "C", 2) && !map->ceiling)
-		map->ceiling = ft_color(s[1]);
-	else
-		ft_exit(1, "Error\nInvalid parameter\n");
-}
-
-static void	set_param_elif_char(t_map *map, char *line)
-{
-	map->map_start--;
-	if (map->map_flag)
-		ft_exit(1, "Error\nInvalid map\n");
-	map->map_height++;
-	map->map_width = ft_max(map->map_width, ft_strlen(line));
-}
 
 static void	set_param_if_null(char *line, t_map *map)
 {
