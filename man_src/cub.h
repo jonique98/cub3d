@@ -192,5 +192,10 @@ void	texture_mapping(t_var *var);
 int		open_cube(int argc, char **argv, t_map *map);
 void	dfs(t_map *map, int **visited, int x, int y);
 void	dfs_valid_map(t_map *map);
+int		is_param_full(t_map *map);
+int		ft_color_atoi(char *str);
+int		ft_color(char *str);
+
+
 
 #endif
