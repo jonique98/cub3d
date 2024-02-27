@@ -6,7 +6,7 @@
 /*   By: jiko <jiko@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 00:06:24 by jiko              #+#    #+#             */
-/*   Updated: 2024/02/27 18:21:52 by jiko             ###   ########.fr       */
+/*   Updated: 2024/02/27 18:24:04 by jiko             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,7 @@ static int	check_valid_string(char **s)
 		|| !ft_strncmp(s[0], "WE", 3) || !ft_strncmp(s[0], "EA", 3)
 		|| !ft_strncmp(s[0], "F", 2) || !ft_strncmp(s[0], "C", 2))
 		return (1);
+	return (0);
 }
 
 static void	if_check_vaild_string(char **s, t_map *map, char *line)
