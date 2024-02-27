@@ -38,7 +38,7 @@ for(int i = 0; i < hei; i++){
 		mlx_pixel_put(img.mlx, img.win_ptr, i, j, color);
 	}
 }
-	
+
 	mlx_put_image_to_window(img.mlx, img.win_ptr, img.img, 0, 0);
 
 	mlx_loop(img.mlx);
