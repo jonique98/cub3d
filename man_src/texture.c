@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   texture.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sumjo <sumjo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: yonyoo <yonyoo@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 05:32:22 by sumjo             #+#    #+#             */
-/*   Updated: 2024/02/27 05:33:23 by sumjo            ###   ########.fr       */
+/*   Updated: 2024/02/27 15:11:11 by yonyoo           ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,8 @@ void	init_texture_direction(char *path, t_data *img, t_var *var, int idx)
 
 	var->tex[idx].texture = (int *)ft_calloc(texHeight * texWidth, sizeof(int));
 	img2.img = mlx_xpm_file_to_image(img->mlx, path, &img2.width, &img2.height);
+	if (!img2.img)
+		ft_exit(1, "Error\nFailed to open xmp\n");
 	img2.addr_tex = (int *)mlx_get_data_addr \
 	(img2.img, &img2.bits_pixel, &img2.line_length, &img2.endian);
 	copy_texture(&img2, var, idx);
