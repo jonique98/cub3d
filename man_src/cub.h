@@ -28,7 +28,6 @@ typedef struct s_key
 	int	right;
 	int	forward;
 	int	backward;
-	int	up;
 	int	down;
 	int	mouse_x;
 	int	mouse_y;
