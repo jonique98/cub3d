@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sumjo <sumjo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: jiko <jiko@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 05:09:37 by sumjo             #+#    #+#             */
-/*   Updated: 2024/02/27 06:24:35 by sumjo            ###   ########.fr       */
+/*   Updated: 2024/02/27 17:34:03 by jiko             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,13 +51,13 @@ void	init_mlx(t_data *image)
 {
 	image->mlx = mlx_init();
 	image->win_ptr = \
-		mlx_new_window(image->mlx, screenWidth, screenHeight, "Hellow World!");
+		mlx_new_window(image->mlx, SCREENWIDTH, SCREENHEIGHT, "Hellow World!");
 	image->img = \
-		mlx_new_image(image->mlx, screenWidth, screenHeight);
+		mlx_new_image(image->mlx, SCREENWIDTH, SCREENHEIGHT);
 	image->addr = mlx_get_data_addr
 		(image->img, &image->bits_pixel, &image->line_length, &image->endian);
 	image->addr_tex = (int *)mlx_get_data_addr
 		(image->img, &image->bits_pixel, &image->line_length, &image->endian);
-	image->width = screenWidth;
-	image->height = screenHeight;
+	image->width = SCREENWIDTH;
+	image->height = SCREENHEIGHT;
 }

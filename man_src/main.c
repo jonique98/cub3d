@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: josumin <josumin@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jiko <jiko@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 05:09:10 by sumjo             #+#    #+#             */
-/*   Updated: 2024/02/27 14:29:33 by josumin          ###   ########.fr       */
+/*   Updated: 2024/02/27 17:41:41 by jiko             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	draw_texture(t_var *var, int x)
 
 	y = var->ray->drawStart;
 	var->tex_var.step = 1.0 * var->tex->height / var->ray->lineHeight;
-	var->tex_var.texPos = (var->ray->drawStart - screenHeight \
+	var->tex_var.texPos = (var->ray->drawStart - SCREENHEIGHT \
 	/ 2 + var->ray->lineHeight / 2) * var->tex_var.step;
 	while (y < var->ray->drawEnd)
 	{
@@ -53,7 +53,7 @@ void	draw_map(t_var *var)
 	double	w;
 
 	x = 0;
-	w = screenWidth;
+	w = SCREENWIDTH;
 	while (x < w)
 	{
 		calculate_ray_values(var, x);
@@ -68,14 +68,14 @@ void	draw_map(t_var *var)
 	}
 }
 
-int mouse_event_draw(int x, int y, t_var *var)
+int	mouse_event_draw(int x, int y, t_var *var)
 {
 	var->key->mouse_x = x;
 	var->key->mouse_y = y;
 	return (0);
 }
 
-int main(int argc, char **argv)
+int	main(int argc, char **argv)
 {
 	t_data image;
 	t_vec_set vec;
@@ -95,8 +95,8 @@ int main(int argc, char **argv)
 	init_vec_set(&vec, &map);
 	ft_memset(&ray, 0, sizeof(t_ray));
 	ft_memset(&key, 0, sizeof(t_key));
-	key.mouse_x = screenWidth / 2;
-	key.mouse_y = screenHeight / 2;
+	key.mouse_x = SCREENWIDTH / 2;
+	key.mouse_y = SCREENHEIGHT / 2;
 	init_frame(&frame);
 
 	var.vec = &vec;

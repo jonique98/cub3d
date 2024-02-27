@@ -1,48 +1,45 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   util.c                                             :+:      :+:    :+:   */
+/*   malloc_util.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jiko <jiko@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/11 05:12:08 by sumjo             #+#    #+#             */
-/*   Updated: 2024/02/27 17:54:37 by jiko             ###   ########.fr       */
+/*   Created: 2024/02/27 17:44:23 by jiko              #+#    #+#             */
+/*   Updated: 2024/02/27 17:46:01 by jiko             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub.h"
 
-int	get_time(void)
+void	safe_free(void *ptr)
 {
-	struct timeval	time;
-	int				ret;
-
-	ret = gettimeofday(&time, NULL);
-	if (ret == -1)
-		return (0);
-	return (time.tv_sec * 1000000 + time.tv_usec);
+	if (ptr)
+		free(ptr);
 }
 
-int	ft_exit(int ret, char *str)
+char	**double_free(int i, char	**be_return)
 {
-	if (str)
-		ft_putstr_fd(str, 2);
-	exit(ret);
+	while (i != -1)
+		free(be_return[i--]);
+	free(be_return);
+	return (NULL);
 }
 
-int	ft_strlen_doble(char **str)
+int	double_free_int(int i, int **be_return)
 {
-	int	i;
-
-	i = 0;
-	while (str[i])
-		i++;
-	return (i);
+	while (i != -1)
+		free(be_return[i--]);
+	free(be_return);
+	return (0);
 }
 
-int	ft_max(int a, int b)
+void	*wft_calloc(int count, int size)
 {
-	if (a > b)
-		return (a);
-	return (b);
+	void	*ptr;
+
+	ptr = ft_calloc(count, size);
+	if (!ptr)
+		ft_exit(1, "Error\nMemory allocation failed\n");
+	return (ptr);
 }

@@ -6,7 +6,7 @@
 /*   By: jiko <jiko@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 05:11:15 by sumjo             #+#    #+#             */
-/*   Updated: 2024/02/26 02:30:02 by jiko             ###   ########.fr       */
+/*   Updated: 2024/02/27 17:34:03 by jiko             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	my_mlx_pixel_put(t_data *data, int x, int y, int color)
 {
 	char	*dst;
 
-	if (x < 0 || x >= screenWidth || y < 0 || y >= screenHeight)
+	if (x < 0 || x >= SCREENWIDTH || y < 0 || y >= SCREENHEIGHT)
 		return ;
 	dst = data->addr + (y * data->line_length + x * (data->bits_pixel / 8));
 	*(unsigned int *)dst = color;
@@ -25,7 +25,7 @@ void	my_mlx_pixel_put(t_data *data, int x, int y, int color)
 void	make_new_img(t_data *image)
 {
 	mlx_destroy_image(image->mlx, image->img);
-	image->img = mlx_new_image(image->mlx, screenWidth, screenHeight);
+	image->img = mlx_new_image(image->mlx, SCREENWIDTH, SCREENHEIGHT);
 	image->addr = mlx_get_data_addr(image->img, \
 	&image->bits_pixel, &image->line_length, &image->endian);
 }

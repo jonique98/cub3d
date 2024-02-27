@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   calculate.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sumjo <sumjo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: jiko <jiko@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/16 03:18:08 by sumjo             #+#    #+#             */
-/*   Updated: 2024/02/27 06:30:48 by sumjo            ###   ########.fr       */
+/*   Updated: 2024/02/27 17:34:03 by jiko             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ void	calculate_side_dist(t_var *var)
 
 void calculate_ray_values(t_var *var, int x)
 {
-	var->ray->cameraX = 2 * x / (double)screenWidth - 1;
+	var->ray->cameraX = 2 * x / (double)SCREENWIDTH - 1;
 	var->ray->rayDir.x = var->vec->dir.x + \
 	var->vec->plane.x * var->ray->cameraX;
 	var->ray->rayDir.y = var->vec->dir.y + \
@@ -89,11 +89,11 @@ void	calculate_distance_between_wall(t_var *var)
 
 void	calculate_draw_start_end(t_var *var)
 {
-	var->ray->lineHeight = (int)(screenHeight / var->ray->perpWallDist);
-	var->ray->drawStart = -var->ray->lineHeight / 2 + screenHeight / 2;
+	var->ray->lineHeight = (int)(SCREENHEIGHT / var->ray->perpWallDist);
+	var->ray->drawStart = -var->ray->lineHeight / 2 + SCREENHEIGHT / 2;
 	if (var->ray->drawStart < 0)
 		var->ray->drawStart = 0;
-	var->ray->drawEnd = var->ray->lineHeight / 2 + screenHeight / 2;
-	if (var->ray->drawEnd >= screenHeight)
-		var->ray->drawEnd = screenHeight - 1;
+	var->ray->drawEnd = var->ray->lineHeight / 2 + SCREENHEIGHT / 2;
+	if (var->ray->drawEnd >= SCREENHEIGHT)
+		var->ray->drawEnd = SCREENHEIGHT - 1;
 }

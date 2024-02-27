@@ -6,32 +6,11 @@
 /*   By: jiko <jiko@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 00:06:24 by jiko              #+#    #+#             */
-/*   Updated: 2024/02/27 17:28:53 by jiko             ###   ########.fr       */
+/*   Updated: 2024/02/27 17:54:04 by jiko             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub.h"
-
-static int	open_cube(int argc, char **argv, t_map *map)
-{
-	int	fd;
-
-	if (argc != 2)
-		ft_exit(1, "Error\nInvalid number of arguments\n");
-	if (ft_strncmp(argv[1] + ft_strlen(argv[1]) - 4, ".cub", 5))
-		ft_exit(1, "Error\nInvalid file extension\n");
-	ft_memset(map, 0, sizeof(t_map));
-	fd = open(argv[1], O_RDONLY);
-	if (fd == -1)
-		ft_exit(1, "Error\nFailed to open file\n");
-	return (fd);
-}
-
-static int	is_param_full(t_map *map)
-{
-	return (map->no && map->so && map->we \
-	&& map->ea && map->floor && map->ceiling);
-}
 
 static int	is_map(char *line)
 {
@@ -96,8 +75,9 @@ static void	set_param(int fd, t_map *map)
 			continue ;
 		}
 		s = wft_split(line, ' ');
-		if (!ft_strncmp(s[0], "NO", 3) || !ft_strncmp(s[0], "SO", 3) || !ft_strncmp(s[0], "WE", 3)\
-		|| !ft_strncmp(s[0], "EA", 3) || !ft_strncmp(s[0], "F", 2) || !ft_strncmp(s[0], "C", 2))
+		if (!ft_strncmp(s[0], "NO", 3) || !ft_strncmp(s[0], "SO", 3)
+			|| !ft_strncmp(s[0], "WE", 3) || !ft_strncmp(s[0], "EA", 3)
+			|| !ft_strncmp(s[0], "F", 2) || !ft_strncmp(s[0], "C", 2))
 		{
 			if (ft_strlen_doble(s) != 2)
 				ft_exit(1, "Error\nInvalid parameter\n");
@@ -132,34 +112,45 @@ static void	set_param(int fd, t_map *map)
 	if (ret == -1)
 		ft_exit(1, "Error\nFailed to read file\n");
 }
-//for -> while바꾸기//for -> while바꾸기//for -> while바꾸기//for -> while바꾸기//for -> while바꾸기
+
 static void set_map(int fd, t_map *t_map)
 {
 	int		**map;
 	char	*line;
+	int		i;
+	int		j;
 
 	map = wft_calloc(t_map->map_height, sizeof(int *));
-	for (int i = 0; i < t_map->map_height; i++) 
+	i = -1;
+	while (++i < t_map->map_height)
 		map[i] = wft_calloc(t_map->map_width, sizeof(int));
-	for (int i = 0; i < t_map->map_height; i++)
-		for (int j = 0; j < t_map->map_width; j++)
+	i = -1;
+	while (++i < t_map->map_height)
+	{
+		j = -1;
+		while (++j < t_map->map_width)
 			map[i][j] = 2;
-	for (int i = 0; i<t_map->map_start; i++)
+	}
+	i = -1;
+	while (++i < t_map->map_start)
 	{
 		get_next_line(fd, &line);
 		free(line);
 	}
-	for (int i = 0; i < t_map->map_height; i++)
+	i = -1;
+	while (++i < t_map->map_height)
 	{
 		get_next_line(fd, &line);
 		remove_space_side(&line, t_map);
-		for (int j = 0; j < (int)ft_strlen(line); j++)
+		j = -1;
+		while (++j < (int)ft_strlen(line))
 		{
 			if (line[j] == '1')
 				map[i][j] = 1;
 			else if (line[j] == '0')
 				map[i][j] = 0;
-			else if (line[j] == 'N' || line[j] == 'S' || line[j] == 'W' || line[j] == 'E')
+			else if (line[j] == 'N' || line[j] == 'S'
+				|| line[j] == 'W' || line[j] == 'E')
 			{
 				if (t_map->player_dir)
 					ft_exit(1, "Error\nInvalid map\n");
@@ -176,45 +167,7 @@ static void set_map(int fd, t_map *t_map)
 	t_map->map = map;
 }
 
-void dfs(t_map *map, int **visited, int x, int y)
-{
-	if (x < 0 || y < 0 || x >= map->map_height || y >= map->map_width)
-		ft_exit(1, "Error\nInvalid map\n");
-	if (map->map[x][y] == 1 || visited[x][y])
-		return ;
-	if (map->map[x][y] == 2)
-		ft_exit(1, "Error\nInvalid map\n");
-	visited[x][y] = 1;
-	dfs(map, visited, x + 1, y);
-	dfs(map, visited, x - 1, y);
-	dfs(map, visited, x, y + 1);
-	dfs(map, visited, x, y - 1);
-}
-
-void	dfs_valid_map(t_map *map)
-{
-	int	**visited;
-	int	i;
-	int	j;
-
-	visited = wft_calloc(map->map_height, sizeof(int *));
-	i = -1;
-	while (++i < map->map_height)
-		visited[i] = wft_calloc(map->map_width, sizeof(int));
-	i = -1;
-	while (++i < map->map_height)
-	{
-		j = -1;
-		while (++j < map->map_width)
-		{
-			if (map->map[i][j] == 0 && !visited[i][j])
-				dfs(map, visited, i, j);
-		}
-	}
-	double_free_int(map->map_height - 1, visited);
-}
-
-void init_map(int argv, char **argc, t_map *map)
+void	init_map(int argv, char **argc, t_map *map)
 {
 	int	fd;
 

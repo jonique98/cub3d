@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   texture.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yonyoo <yonyoo@student.42seoul.kr>         +#+  +:+       +#+        */
+/*   By: jiko <jiko@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 05:32:22 by sumjo             #+#    #+#             */
-/*   Updated: 2024/02/27 15:11:11 by yonyoo           ###   ########seoul.kr  */
+/*   Updated: 2024/02/27 17:34:22 by jiko             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,30 +21,30 @@ void	copy_texture(t_data *img, t_var *var, int idx)
 	int	result_col;
 
 	i = -1;
-	while (++i < texHeight)
+	while (++i < TEXTHEIGHT)
 	{
 		j = -1;
-		while (++j < texWidth)
+		while (++j < TEXTWIDTH)
 		{
-			result_row = (img->height * i) / texHeight;
-			result_col = (img->width * j) / texWidth;
+			result_row = (img->height * i) / TEXTHEIGHT;
+			result_col = (img->width * j) / TEXTWIDTH;
 			if (result_row < 0)
 				result_row = 0;
 			if (result_col < 0)
 				result_col = 0;
 			color = img->addr_tex[img->width * result_row + result_col];
-			var->tex[idx].texture[texWidth * i + j] = color;
+			var->tex[idx].texture[TEXTWIDTH * i + j] = color;
 		}
 	}
-	var->tex[idx].width = texWidth;
-	var->tex[idx].height = texHeight;
+	var->tex[idx].width = TEXTWIDTH;
+	var->tex[idx].height = TEXTHEIGHT;
 }
 
 void	init_texture_direction(char *path, t_data *img, t_var *var, int idx)
 {
 	t_data	img2;
 
-	var->tex[idx].texture = (int *)ft_calloc(texHeight * texWidth, sizeof(int));
+	var->tex[idx].texture = (int *)ft_calloc(TEXTHEIGHT * TEXTWIDTH, sizeof(int));
 	img2.img = mlx_xpm_file_to_image(img->mlx, path, &img2.width, &img2.height);
 	if (!img2.img)
 		ft_exit(1, "Error\nFailed to open xmp\n");

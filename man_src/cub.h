@@ -16,10 +16,10 @@
 # include <sys/time.h>
 # include <fcntl.h>
 
-#define screenWidth 1920
-#define screenHeight 1080
-#define texWidth 128
-#define texHeight 128
+# define SCREENWIDTH 1920
+# define SCREENHEIGHT 1080
+# define TEXTWIDTH 128
+# define TEXTHEIGHT 128
 
 typedef struct s_key
 {
@@ -31,11 +31,11 @@ typedef struct s_key
 	int	backward;
 	int	up;
 	int	down;
-	int mouse_x;
-	int mouse_y;
-	int old_mouse_x;
-	int old_mouse_y;
-}t_key;
+	int	mouse_x;
+	int	mouse_y;
+	int	old_mouse_x;
+	int	old_mouse_y;
+}	t_key;
 
 typedef struct s_data
 {
@@ -49,19 +49,19 @@ typedef struct s_data
 	int		endian;
 	int		width;
 	int		height;
-}t_data;
+}	t_data;
 
 typedef struct s_vec
 {
 	double	x;
 	double	y;
-}t_vec;
+}	t_vec;
 
 typedef struct s_cor
 {
 	int	x;
 	int	y;
-}t_cor;
+}	t_cor;
 
 typedef struct s_frame
 {
@@ -70,7 +70,7 @@ typedef struct s_frame
 	double	frameTime;
 	double	moveSpeed;
 	double	rotSpeed;
-}t_frame;
+}	t_frame;
 
 
 typedef struct s_vectorset
@@ -79,7 +79,7 @@ typedef struct s_vectorset
 	t_vec	pos;
 	t_vec	dir;
 	t_vec	plane;
-}t_vec_set;
+}	t_vec_set;
 
 typedef struct s_map
 {
@@ -88,16 +88,16 @@ typedef struct s_map
 	int		map_start;
 	int		map_width;
 	int		map_height;
-	char 	*no;
-	char 	*so;
-	char 	*we;
-	char 	*ea;
+	char	*no;
+	char	*so;
+	char	*we;
+	char	*ea;
 	int		floor;
 	int		ceiling;
 	int		player_x;
 	int		player_y;
 	char	player_dir;
-}t_map;
+}	t_map;
 
 typedef struct s_ray
 {
@@ -113,15 +113,15 @@ typedef struct s_ray
 	int		drawStart;
 	int		drawEnd;
 	int		hit;
-}t_ray;
+}	t_ray;
 
-typedef struct  s_texture
+typedef struct s_texture
 {
-    char		*tex_path;
-    int         *texture;
-	int         width;
-	int         height;
-}t_texture;
+	char	*tex_path;
+	int		*texture;
+	int		width;
+	int		height;
+}	t_texture;
 
 typedef struct s_texture_var
 {
@@ -131,19 +131,19 @@ typedef struct s_texture_var
 	double	texPos;
 	int		texY;
 	int		direction;
-}t_texture_var;
+}	t_texture_var;
 
 typedef struct s_var
 {
-	t_data	*image;
-	t_vec_set	*vec;
-	t_key	*key;
-	t_frame	*frame;
-	t_map	*map;
-	t_ray 	*ray;
-	t_texture 	tex[4];
+	t_data			*image;
+	t_vec_set		*vec;
+	t_key			*key;
+	t_frame			*frame;
+	t_map			*map;
+	t_ray			*ray;
+	t_texture		tex[4];
 	t_texture_var	tex_var;
-} t_var;
+}	t_var;
 
 void	my_mlx_pixel_put(t_data *data, int x, int y, int color);
 void	make_new_img(t_data *image);
@@ -164,13 +164,13 @@ int		key_lift(int key_code, t_var *var);
 int		render(t_var *var);
 int		get_time(void);
 void	init_mlx(t_data *image);
-void 	init_map(int argv, char **argc, t_map *map);
+void	init_map(int argv, char **argc, t_map *map);
 void	*wft_calloc(int count, int size);
 int		ft_exit(int ret, char *str);
 int		get_next_line(int fd, char **dest);
 char	*wft_strdup(const char *src);
 char	*wft_substr(char const *s, unsigned int start, size_t len);
-int 	ft_strlen_doble(char **str);
+int		ft_strlen_doble(char **str);
 int		ft_color(char *str);
 char	**wft_split(char const *str, char c);
 char	**double_free(int i, char	**be_return);
@@ -189,5 +189,8 @@ void	copy_texture(t_data *img, t_var *var, int idx);
 void	init_texture_direction(char *path, t_data *img, t_var *var, int idx);
 void	init_texture(t_data *img, t_var *var);
 void	texture_mapping(t_var *var);
+int		open_cube(int argc, char **argv, t_map *map);
+void	dfs(t_map *map, int **visited, int x, int y);
+void	dfs_valid_map(t_map *map);
 
-# endif
+#endif
