@@ -6,7 +6,7 @@
 /*   By: jiko <jiko@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 05:09:37 by sumjo             #+#    #+#             */
-/*   Updated: 2024/02/28 20:01:31 by jiko             ###   ########.fr       */
+/*   Updated: 2024/02/28 20:22:56 by jiko             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,6 @@ void	init2(t_var *var)
 void	init_frame(t_frame *frame)
 {
 	ft_memset(frame, 0, sizeof(t_frame));
-	frame->old_time = get_time();
 	frame->move_speed = 0.1;
 	frame->rot_speed = 0.07;
 }

@@ -6,7 +6,7 @@
 /*   By: jiko <jiko@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 19:57:32 by jiko              #+#    #+#             */
-/*   Updated: 2024/02/28 20:15:54 by jiko             ###   ########.fr       */
+/*   Updated: 2024/02/28 20:23:00 by jiko             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@
 # include <math.h>
 # include <stdlib.h>
 # include <unistd.h>
-# include <sys/time.h>
 # include <fcntl.h>
 
 # define SCREENWIDTH 1920
@@ -169,7 +168,6 @@ void	draw_map(t_var *var);
 int		key_press(int key_code, t_var *var);
 int		key_lift(int key_code, t_var *var);
 int		render(t_var *var);
-int		get_time(void);
 void	init_mlx(t_data *image);
 void	init_map(int argv, char **argc, t_map *map);
 void	*wft_calloc(int count, int size);
