@@ -6,7 +6,7 @@
 /*   By: sumjo <sumjo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 05:09:37 by sumjo             #+#    #+#             */
-/*   Updated: 2024/02/28 21:23:32 by sumjo            ###   ########.fr       */
+/*   Updated: 2024/02/28 21:49:32 by sumjo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,17 +17,7 @@ void	init_vec_set(t_vec_set *vec, t_map *map)
 	ft_memset(vec, 0, sizeof(t_vec_set));
 	vec->pos.x = map->player_x + 0.02;
 	vec->pos.y = map->player_y + 0.02;
-	if (map->player_dir == 'N')
-	{
-		vec->dir.y = -1;
-		vec->plane.x = 0.66;
-	}
-	else if (map->player_dir == 'S')
-	{
-		vec->dir.y = 1;
-		vec->plane.x = 0.66;
-	}
-	else if (map->player_dir == 'W')
+	if (map->player_dir == 'W')
 	{
 		vec->dir.x = -1;
 		vec->plane.y = 0.66;
@@ -35,6 +25,16 @@ void	init_vec_set(t_vec_set *vec, t_map *map)
 	else if (map->player_dir == 'E')
 	{
 		vec->dir.x = 1;
+		vec->plane.y = -0.66;
+	}
+	else if (map->player_dir == 'N')
+	{
+		vec->dir.y = -1;
+		vec->plane.x = -0.66;
+	}
+	else if (map->player_dir == 'S')
+	{
+		vec->dir.y = 1;
 		vec->plane.x = 0.66;
 	}
 }
@@ -45,9 +45,9 @@ void	init1(t_var *var)
 	t_vec_set	*vec;
 	t_frame		*frame;
 
-	image = ft_calloc(1, sizeof(t_data));
-	vec = ft_calloc(1, sizeof(t_vec_set));
-	frame = ft_calloc(1, sizeof(t_frame));
+	image = wft_calloc(1, sizeof(t_data));
+	vec = wft_calloc(1, sizeof(t_vec_set));
+	frame = wft_calloc(1, sizeof(t_frame));
 	init_mlx(image);
 	var->image = image;
 	init_texture(image, var);
@@ -62,8 +62,8 @@ void	init2(t_var *var)
 	t_key		*key;
 	t_ray		*ray;
 
-	key = ft_calloc(1, sizeof(t_key));
-	ray = ft_calloc(1, sizeof(t_ray));
+	key = wft_calloc(1, sizeof(t_key));
+	ray = wft_calloc(1, sizeof(t_ray));
 	key->mouse_x = SCREENWIDTH / 2;
 	key->mouse_y = SCREENHEIGHT / 2;
 	var->key = key;
@@ -81,7 +81,7 @@ void	init_mlx(t_data *image)
 {
 	image->mlx = mlx_init();
 	image->win_ptr = \
-		mlx_new_window(image->mlx, SCREENWIDTH, SCREENHEIGHT, "Hellow World!");
+		mlx_new_window(image->mlx, SCREENWIDTH, SCREENHEIGHT, "Hell!");
 	image->img = \
 		mlx_new_image(image->mlx, SCREENWIDTH, SCREENHEIGHT);
 	image->addr = mlx_get_data_addr

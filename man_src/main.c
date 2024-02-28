@@ -6,7 +6,7 @@
 /*   By: sumjo <sumjo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 05:09:10 by sumjo             #+#    #+#             */
-/*   Updated: 2024/02/28 21:13:15 by sumjo            ###   ########.fr       */
+/*   Updated: 2024/02/28 21:47:25 by sumjo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,13 @@
 void	calculate_direction(t_var *var)
 {
 	if (var->ray->side == 0 && var->ray->ray_dir.x < 0)
-		var->tex_var.direction = 0;
-	else if (var->ray->side == 0 && var->ray->ray_dir.x > 0)
-		var->tex_var.direction = 1;
-	else if (var->ray->side == 1 && var->ray->ray_dir.y < 0)
 		var->tex_var.direction = 2;
-	else
+	else if (var->ray->side == 0 && var->ray->ray_dir.x >= 0)
 		var->tex_var.direction = 3;
+	else if (var->ray->side == 1 && var->ray->ray_dir.y < 0)
+		var->tex_var.direction = 0;
+	else
+		var->tex_var.direction = 1;
 }
 
 void	draw_texture(t_var *var, int x)
@@ -82,9 +82,6 @@ int	main(int argc, char **argv)
 	var.map = &map;
 	init1(&var);
 	init2(&var);
-	// mlx_mouse_hook(var.image->win_ptr, mouse_press, &var);
-	mlx_hook(var.image->win_ptr, 4, 0, mouse_press, &var);
-	mlx_hook(var.image->win_ptr, 5, 0, mouse_release, &var);
 	mlx_hook(var.image->win_ptr, 2, 0, key_press, &var);
 	mlx_hook(var.image->win_ptr, 3, 1L << 1, key_lift, &var);
 	mlx_hook(var.image->win_ptr, 6, 0, mouse_event_draw, &var);
