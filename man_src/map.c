@@ -6,7 +6,7 @@
 /*   By: jiko <jiko@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 00:06:24 by jiko              #+#    #+#             */
-/*   Updated: 2024/02/27 18:43:54 by jiko             ###   ########.fr       */
+/*   Updated: 2024/02/28 19:52:58 by jiko             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ void	set_player_position(t_map *map, int i, int j, char c)
 	map->player_dir = c;
 }
 
-void	set_map_start(int fd, t_map *t_map, int ***map, char *line)
+void	set_map_start(int fd, t_map *t_map, int ***map, char *l)
 {
 	int		i;
 	int		j;
@@ -56,20 +56,22 @@ void	set_map_start(int fd, t_map *t_map, int ***map, char *line)
 	i = -1;
 	while (++i < t_map->map_height)
 	{
-		get_next_line(fd, &line);
-		remove_space_side(&line, t_map);
+		get_next_line(fd, &l);
+		remove_space_side(&l, t_map);
 		j = -1;
-		while (++j < (int)ft_strlen(line))
+		while (++j < (int)ft_strlen(l))
 		{
-			if (line[j] == '1')
+			if (l[j] == '1')
 				(*map)[i][j] = 1;
-			else if (line[j] == '0')
+			else if (l[j] == '0')
 				(*map)[i][j] = 0;
-			else if (line[j] == 'N' || line[j] == 'S'
-				|| line[j] == 'W' || line[j] == 'E')
-				set_player_position(t_map, i, j, line[j]);
+			else if (l[j] == 'N' || l[j] == 'S' || l[j] == 'W' || l[j] == 'E')
+			{
+				(*map)[i][j] = 0;
+				set_player_position(t_map, i, j, l[j]);
+			}
 		}
-		free(line);
+		free(l);
 	}
 	if (!t_map->player_dir)
 		ft_exit(1, "Error\nInvalid map\n");

@@ -1,9 +1,9 @@
-NO /goinfre/yonyoo/jiko/xpm/eagle.xpm
-SO /goinfre/yonyoo/jiko/xpm/mossy.xpm
+NO ./xpm/eagle.xpm
+SO ./xpm/mossy.xpm
 F 220,100,0
 C 225,30,0
-WE /goinfre/yonyoo/jiko/xpm/greystone.xpm
-EA /goinfre/yonyoo/jiko/xpm/barrel.xpm
+WE ./xpm/greystone.xpm
+EA ./xpm/barrel.xpm
 
 
 111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111
