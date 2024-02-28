@@ -6,7 +6,7 @@
 /*   By: sumjo <sumjo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 19:57:32 by jiko              #+#    #+#             */
-/*   Updated: 2024/02/28 21:14:10 by sumjo            ###   ########.fr       */
+/*   Updated: 2024/02/28 21:46:31 by sumjo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -209,8 +209,8 @@ void	if_check_vaild_string(char **s, t_map *map, char *line);
 void	init1(t_var *var);
 void	init2(t_var *var);
 int		mouse_event_draw(int x, int y, t_var *var);
-int		mouse_press(int button, int x, int y, t_var *var);
 int		is_inside_map(int x, int y, t_map *map);
-int		mouse_release(int button, int x, int y, t_var *var);
+int		mouse_press(t_var *var);
+int		mouse_release(t_var *var);
 
 #endif

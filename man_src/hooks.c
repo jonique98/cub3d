@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   hooks.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: josumin <josumin@student.42.fr>            +#+  +:+       +#+        */
+/*   By: sumjo <sumjo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 05:12:32 by sumjo             #+#    #+#             */
-/*   Updated: 2024/02/27 19:17:31 by josumin          ###   ########.fr       */
+/*   Updated: 2024/02/28 21:45:12 by sumjo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,13 @@ int	key_press(int key_code, t_var *var)
 		var->key->right = 1;
 	else if (key_code == 125)
 		var->key->down = 1;
+	else if (key_code == 12)
+	{
+		if (var->key->mouse_press == 0)
+			mouse_press(var);
+		else
+			mouse_release(var);
+	}
 	return (0);
 }
 
