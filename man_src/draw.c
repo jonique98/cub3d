@@ -6,7 +6,7 @@
 /*   By: jiko <jiko@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 05:11:15 by sumjo             #+#    #+#             */
-/*   Updated: 2024/02/28 20:15:41 by jiko             ###   ########.fr       */
+/*   Updated: 2024/02/28 22:33:21 by jiko             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,21 +30,21 @@ void	make_new_img(t_data *image)
 	&image->bits_pixel, &image->line_length, &image->endian);
 }
 
-void	draw_background(int line, t_data *image)
+void	draw_background(int line, t_var *var)
 {
 	int	x;
 	int	y;
 
 	x = 0;
-	while (x < image->width)
+	while (x < var->image->width)
 	{
 		y = 0;
-		while (y < image->height)
+		while (y < var->image->height)
 		{
 			if (y < line)
-				my_mlx_pixel_put(image, x, y, 0x87CEEB);
+				my_mlx_pixel_put(var->image, x, y, var->map->ceiling);
 			else
-				my_mlx_pixel_put(image, x, y, 0x228B22);
+				my_mlx_pixel_put(var->image, x, y, var->map->floor);
 			y++;
 		}
 		x++;
@@ -68,7 +68,7 @@ void	draw_minimap(t_var *var)
 			tmp_y = var->vec->pos.y + j;
 			if (is_inside_map(tmp_x, tmp_y, var->map))
 			{
-				if (var->map->map[tmp_y][tmp_x] == 1)
+				if (var->map->map[tmp_y][tmp_x] != 0)
 					draw_sq(var->image, (i + 10) * 10, (j + 10) * 10, 0x000000);
 				else
 					draw_sq(var->image, (i + 10) * 10, (j + 10) * 10, 0xFFFFFF);
@@ -83,7 +83,7 @@ void	draw_minimap(t_var *var)
 void	draw(t_var *var)
 {
 	make_new_img(var->image);
-	draw_background(var->image->height / 2, var->image);
+	draw_background(var->image->height / 2, var);
 	draw_map(var);
 	draw_minimap(var);
 	mlx_put_image_to_window
