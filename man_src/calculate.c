@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   calculate.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jiko <jiko@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: josumin <josumin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/16 03:18:08 by sumjo             #+#    #+#             */
-/*   Updated: 2024/02/27 17:34:03 by jiko             ###   ########.fr       */
+/*   Updated: 2024/02/27 18:46:42 by josumin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,43 +14,43 @@
 
 void	calculate_side_dist(t_var *var)
 {
-	if (var->ray->rayDir.x < 0)
+	if (var->ray->ray_dir.x < 0)
 	{
 		var->ray->step.x = -1;
-		var->ray->sideDist.x = \
-		(var->vec->pos.x - var->ray->map.x) * var->ray->deltaDist.x;
+		var->ray->side_dist.x = \
+		(var->vec->pos.x - var->ray->map.x) * var->ray->delta_dist.x;
 	}
 	else
 	{
 		var->ray->step.x = 1;
-		var->ray->sideDist.x = \
-		(var->ray->map.x + 1.0 - var->vec->pos.x) * var->ray->deltaDist.x;
+		var->ray->side_dist.x = \
+		(var->ray->map.x + 1.0 - var->vec->pos.x) * var->ray->delta_dist.x;
 	}
-	if (var->ray->rayDir.y < 0)
+	if (var->ray->ray_dir.y < 0)
 	{
 		var->ray->step.y = -1;
-		var->ray->sideDist.y = \
-		(var->vec->pos.y - var->ray->map.y) * var->ray->deltaDist.y;
+		var->ray->side_dist.y = \
+		(var->vec->pos.y - var->ray->map.y) * var->ray->delta_dist.y;
 	}
 	else
 	{
 		var->ray->step.y = 1;
-		var->ray->sideDist.y = \
-		(var->ray->map.y + 1.0 - var->vec->pos.y) * var->ray->deltaDist.y;
+		var->ray->side_dist.y = \
+		(var->ray->map.y + 1.0 - var->vec->pos.y) * var->ray->delta_dist.y;
 	}
 }
 
-void calculate_ray_values(t_var *var, int x)
+void	calculate_ray_values(t_var *var, int x)
 {
-	var->ray->cameraX = 2 * x / (double)SCREENWIDTH - 1;
-	var->ray->rayDir.x = var->vec->dir.x + \
-	var->vec->plane.x * var->ray->cameraX;
-	var->ray->rayDir.y = var->vec->dir.y + \
-	var->vec->plane.y * var->ray->cameraX;
+	var->ray->camera_x = 2 * x / (double)SCREENWIDTH - 1;
+	var->ray->ray_dir.x = var->vec->dir.x + \
+	var->vec->plane.x * var->ray->camera_x;
+	var->ray->ray_dir.y = var->vec->dir.y + \
+	var->vec->plane.y * var->ray->camera_x;
 	var->ray->map.x = (int)var->vec->pos.x;
 	var->ray->map.y = (int)var->vec->pos.y;
-	var->ray->deltaDist.x = fabs(1 / var->ray->rayDir.x);
-	var->ray->deltaDist.y = fabs(1 / var->ray->rayDir.y);
+	var->ray->delta_dist.x = fabs(1 / var->ray->ray_dir.x);
+	var->ray->delta_dist.y = fabs(1 / var->ray->ray_dir.y);
 	var->ray->hit = 0;
 }
 
@@ -58,15 +58,15 @@ void	calculate_wall_hit_dda(t_var *var)
 {
 	while (var->ray->hit == 0)
 	{
-		if (var->ray->sideDist.x < var->ray->sideDist.y)
+		if (var->ray->side_dist.x < var->ray->side_dist.y)
 		{
-			var->ray->sideDist.x += var->ray->deltaDist.x;
+			var->ray->side_dist.x += var->ray->delta_dist.x;
 			var->ray->map.x += var->ray->step.x;
 			var->ray->side = 0;
 		}
 		else
 		{
-			var->ray->sideDist.y += var->ray->deltaDist.y;
+			var->ray->side_dist.y += var->ray->delta_dist.y;
 			var->ray->map.y += var->ray->step.y;
 			var->ray->side = 1;
 		}
@@ -78,22 +78,22 @@ void	calculate_wall_hit_dda(t_var *var)
 void	calculate_distance_between_wall(t_var *var)
 {
 	if (var->ray->side == 0)
-		var->ray->perpWallDist = \
+		var->ray->perpwall_dist = \
 		(var->ray->map.x - var->vec->pos.x + \
-		(1 - var->ray->step.x) / 2) / var->ray->rayDir.x;
+		(1 - var->ray->step.x) / 2) / var->ray->ray_dir.x;
 	else
-		var->ray->perpWallDist = \
+		var->ray->perpwall_dist = \
 		(var->ray->map.y - var->vec->pos.y + \
-		(1 - var->ray->step.y) / 2) / var->ray->rayDir.y;
+		(1 - var->ray->step.y) / 2) / var->ray->ray_dir.y;
 }
 
 void	calculate_draw_start_end(t_var *var)
 {
-	var->ray->lineHeight = (int)(SCREENHEIGHT / var->ray->perpWallDist);
-	var->ray->drawStart = -var->ray->lineHeight / 2 + SCREENHEIGHT / 2;
-	if (var->ray->drawStart < 0)
-		var->ray->drawStart = 0;
-	var->ray->drawEnd = var->ray->lineHeight / 2 + SCREENHEIGHT / 2;
-	if (var->ray->drawEnd >= SCREENHEIGHT)
-		var->ray->drawEnd = SCREENHEIGHT - 1;
+	var->ray->line_height = (int)(SCREENHEIGHT / var->ray->perpwall_dist);
+	var->ray->draw_start = -var->ray->line_height / 2 + SCREENHEIGHT / 2;
+	if (var->ray->draw_start < 0)
+		var->ray->draw_start = 0;
+	var->ray->draw_end = var->ray->line_height / 2 + SCREENHEIGHT / 2;
+	if (var->ray->draw_end >= SCREENHEIGHT)
+		var->ray->draw_end = SCREENHEIGHT - 1;
 }

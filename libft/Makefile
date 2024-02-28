@@ -1,4 +1,5 @@
 CC = cc
+# CC = arch -x86_64 gcc
 CFLAGS = -Wall -Wextra -Werror
 RMF = rm -f
 SRC = ft_atoi.c ft_bzero.c ft_isalnum.c \

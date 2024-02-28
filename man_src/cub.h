@@ -7,7 +7,6 @@
 # endif
 
 # include <stdio.h>
-// # include <mlx.h>
 # include "../minilibx/mlx.h"
 # include "../libft/libft.h"
 # include <math.h>
@@ -29,12 +28,10 @@ typedef struct s_key
 	int	right;
 	int	forward;
 	int	backward;
-	int	up;
 	int	down;
 	int	mouse_x;
 	int	mouse_y;
-	int	old_mouse_x;
-	int	old_mouse_y;
+	int	mouse_press;
 }	t_key;
 
 typedef struct s_data
@@ -66,10 +63,10 @@ typedef struct s_cor
 typedef struct s_frame
 {
 	double	time;
-	double	oldTime;
-	double	frameTime;
-	double	moveSpeed;
-	double	rotSpeed;
+	double	old_time;
+	double	frame_time;
+	double	move_speed;
+	double	rot_speed;
 }	t_frame;
 
 
@@ -101,17 +98,17 @@ typedef struct s_map
 
 typedef struct s_ray
 {
-	double	cameraX;
-	t_vec	rayDir;
-	t_vec	sideDist;
-	t_vec	deltaDist;
-	double	perpWallDist;
+	double	camera_x;
+	t_vec	ray_dir;
+	t_vec	side_dist;
+	t_vec	delta_dist;
+	double	perpwall_dist;
 	t_cor	step;
 	t_cor	map;
 	int		side;
-	int		lineHeight;
-	int		drawStart;
-	int		drawEnd;
+	int		line_height;
+	int		draw_start;
+	int		draw_end;
 	int		hit;
 }	t_ray;
 
@@ -126,10 +123,10 @@ typedef struct s_texture
 typedef struct s_texture_var
 {
 	double	wallx;
-	int		texX;
+	int		tex_x;
 	double	step;
-	double	texPos;
-	int		texY;
+	double	tex_pos;
+	int		tex_y;
 	int		direction;
 }	t_texture_var;
 
@@ -202,5 +199,10 @@ void	set_param_elif_char(t_map *map, char *line);
 void	set_param_if_null(char *line, t_map *map);
 int		check_valid_string(char **s);
 void	if_check_vaild_string(char **s, t_map *map, char *line);
+void	init1(t_var *var);
+void	init2(t_var *var);
+int		mouse_event_draw(int x, int y, t_var *var);
+int		mouse_press(int button, int x, int y, t_var *var);
+
 
 #endif
