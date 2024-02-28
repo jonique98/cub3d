@@ -5,7 +5,7 @@ CFLAGS = -Wall -Wextra -Werror
 LIBFTFLAG	= -Llibft -lft
 SRC_NAME =  main draw hooks init move rotate util map get_next_line \
 			mouse_hook wft_substr_strdup wft_split calculate texture\
-draw_util map_util malloc_util map_util2
+draw_util map_util malloc_util map_util2 map_util3
 RMF = rm -f
 
 MAN_DIR = ./man_src/
