@@ -6,42 +6,13 @@
 /*   By: jiko <jiko@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 00:06:24 by jiko              #+#    #+#             */
-/*   Updated: 2024/02/27 18:26:29 by jiko             ###   ########.fr       */
+/*   Updated: 2024/02/27 18:43:54 by jiko             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub.h"
 
-static void	set_param_if_null(char *line, t_map *map)
-{
-	if (is_param_full(map) && map->map_height)
-	{
-		map->map_start--;
-		map->map_flag = 1;
-	}
-	safe_free(line);
-}
-
-static int	check_valid_string(char **s)
-{
-	if (!ft_strncmp(s[0], "NO", 3) || !ft_strncmp(s[0], "SO", 3)
-		|| !ft_strncmp(s[0], "WE", 3) || !ft_strncmp(s[0], "EA", 3)
-		|| !ft_strncmp(s[0], "F", 2) || !ft_strncmp(s[0], "C", 2))
-		return (1);
-	return (0);
-}
-
-static void	if_check_vaild_string(char **s, t_map *map, char *line)
-{
-	if (check_valid_string(s))
-		set_param_if_char(map, s);
-	else if (is_param_full(map) && is_map(line))
-		set_param_elif_char(map, line);
-	else
-		ft_exit(1, "Error\nInvalid parameter\n");
-}
-
-static void	set_param(int fd, t_map *map)
+void	set_param(int fd, t_map *map)
 {
 	char	*line;
 	char	**s;
@@ -68,7 +39,43 @@ static void	set_param(int fd, t_map *map)
 		ft_exit(1, "Error\nFailed to read file\n");
 }
 
-static void set_map(int fd, t_map *t_map)
+void	set_player_position(t_map *map, int i, int j, char c)
+{
+	if (map->player_dir)
+		ft_exit(1, "Error\nInvalid map\n");
+	map->player_x = j;
+	map->player_y = i;
+	map->player_dir = c;
+}
+
+void	set_map_start(int fd, t_map *t_map, int ***map, char *line)
+{
+	int		i;
+	int		j;
+
+	i = -1;
+	while (++i < t_map->map_height)
+	{
+		get_next_line(fd, &line);
+		remove_space_side(&line, t_map);
+		j = -1;
+		while (++j < (int)ft_strlen(line))
+		{
+			if (line[j] == '1')
+				(*map)[i][j] = 1;
+			else if (line[j] == '0')
+				(*map)[i][j] = 0;
+			else if (line[j] == 'N' || line[j] == 'S'
+				|| line[j] == 'W' || line[j] == 'E')
+				set_player_position(t_map, i, j, line[j]);
+		}
+		free(line);
+	}
+	if (!t_map->player_dir)
+		ft_exit(1, "Error\nInvalid map\n");
+}
+
+static void	set_map(int fd, t_map *t_map)
 {
 	int		**map;
 	char	*line;
@@ -92,33 +99,7 @@ static void set_map(int fd, t_map *t_map)
 		get_next_line(fd, &line);
 		free(line);
 	}
-	i = -1;
-	while (++i < t_map->map_height)
-	{
-		get_next_line(fd, &line);
-		remove_space_side(&line, t_map);
-		j = -1;
-		while (++j < (int)ft_strlen(line))
-		{
-			if (line[j] == '1')
-				map[i][j] = 1;
-			else if (line[j] == '0')
-				map[i][j] = 0;
-			else if (line[j] == 'N' || line[j] == 'S'
-				|| line[j] == 'W' || line[j] == 'E')
-			{
-				if (t_map->player_dir)
-					ft_exit(1, "Error\nInvalid map\n");
-				map[i][j] = 0;
-				t_map->player_x = j;
-				t_map->player_y = i;
-				t_map->player_dir = line[j];
-			}
-		}
-		free(line);
-	}
-	if (!t_map->player_dir)
-		ft_exit(1, "Error\nInvalid map\n");
+	set_map_start(fd, t_map, &map, line);
 	t_map->map = map;
 }
 
@@ -136,4 +117,3 @@ void	init_map(int argv, char **argc, t_map *map)
 	close(fd);
 	dfs_valid_map(map);
 }
-

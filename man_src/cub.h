@@ -199,5 +199,8 @@ int		is_map(char *line);
 void	remove_space_side(char **line, t_map *map);
 void	set_param_if_char(t_map *map, char **s);
 void	set_param_elif_char(t_map *map, char *line);
+void	set_param_if_null(char *line, t_map *map);
+int		check_valid_string(char **s);
+void	if_check_vaild_string(char **s, t_map *map, char *line);
 
 #endif
