@@ -6,7 +6,7 @@
 /*   By: jiko <jiko@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 17:47:53 by jiko              #+#    #+#             */
-/*   Updated: 2024/02/28 20:00:57 by jiko             ###   ########.fr       */
+/*   Updated: 2024/02/28 22:07:46 by jiko             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,9 @@ void	remove_space_side(char **line, t_map *map)
 
 void	set_param_if_char(t_map *map, char **s)
 {
-	if (!ft_strncmp(s[0], "NO", 3) && !map->no)
+	if (ft_strlen_doble(s) != 2)
+		ft_exit(1, "Error\nInvalid parameter\n");
+	else if (!ft_strncmp(s[0], "NO", 3) && !map->no)
 		map->no = wft_strdup(s[1]);
 	else if (!ft_strncmp(s[0], "SO", 3) && !map->so)
 		map->so = wft_strdup(s[1]);

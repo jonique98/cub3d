@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sumjo <sumjo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: jiko <jiko@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 19:57:32 by jiko              #+#    #+#             */
-/*   Updated: 2024/02/28 21:51:31 by sumjo            ###   ########.fr       */
+/*   Updated: 2024/02/28 22:00:01 by jiko             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -151,7 +151,7 @@ typedef struct s_var
 
 void	my_mlx_pixel_put(t_data *data, int x, int y, int color);
 void	make_new_img(t_data *image);
-void	draw_background(int line, t_data *image);
+void	draw_background(int line, t_var *var);
 void	draw(t_var *var);
 void	init_vec_set(t_vec_set *vec, t_map *map);
 void	init_key(t_key *key);
