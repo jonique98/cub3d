@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jiko <jiko@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: sumjo <sumjo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 05:09:10 by sumjo             #+#    #+#             */
-/*   Updated: 2024/02/28 20:01:22 by jiko             ###   ########.fr       */
+/*   Updated: 2024/02/28 21:13:15 by sumjo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,11 @@ void	draw_map(t_var *var)
 	}
 }
 
+int	end(void)
+{
+	exit(0);
+}
+
 int	main(int argc, char **argv)
 {
 	t_var	var;
@@ -77,10 +82,13 @@ int	main(int argc, char **argv)
 	var.map = &map;
 	init1(&var);
 	init2(&var);
+	// mlx_mouse_hook(var.image->win_ptr, mouse_press, &var);
+	mlx_hook(var.image->win_ptr, 4, 0, mouse_press, &var);
+	mlx_hook(var.image->win_ptr, 5, 0, mouse_release, &var);
 	mlx_hook(var.image->win_ptr, 2, 0, key_press, &var);
 	mlx_hook(var.image->win_ptr, 3, 1L << 1, key_lift, &var);
 	mlx_hook(var.image->win_ptr, 6, 0, mouse_event_draw, &var);
-	mlx_mouse_hook(var.image->win_ptr, mouse_press, &var);
+	mlx_hook(var.image->win_ptr, 17, 0, end, &var);
 	mlx_loop_hook(var.image->mlx, render, &var);
 	mlx_loop(var.image->mlx);
 	exit (0);

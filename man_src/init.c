@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jiko <jiko@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: sumjo <sumjo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 05:09:37 by sumjo             #+#    #+#             */
-/*   Updated: 2024/02/28 20:22:56 by jiko             ###   ########.fr       */
+/*   Updated: 2024/02/28 21:22:20 by sumjo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,18 +19,18 @@ void	init_vec_set(t_vec_set *vec, t_map *map)
 	vec->pos.y = map->player_y + 0.02;
 	if (map->player_dir == 'N')
 	{
-		vec->dir.x = -1;
-		vec->plane.y = 0.66;
+		vec->dir.y = -1;
+		vec->plane.x = 0.66;
 	}
 	else if (map->player_dir == 'S')
 	{
-		vec->dir.x = 1;
-		vec->plane.y = -0.66;
+		vec->dir.y = 1;
+		vec->plane.x = 0.66;
 	}
 	else if (map->player_dir == 'W')
 	{
-		vec->dir.y = -1;
-		vec->plane.x = -0.66;
+		vec->dir.x = -1;
+		vec->plane.y = 0.66;
 	}
 	else if (map->player_dir == 'E')
 	{

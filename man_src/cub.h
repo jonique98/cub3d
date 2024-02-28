@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jiko <jiko@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: sumjo <sumjo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 19:57:32 by jiko              #+#    #+#             */
-/*   Updated: 2024/02/28 20:24:56 by jiko             ###   ########.fr       */
+/*   Updated: 2024/02/28 21:14:10 by sumjo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -211,5 +211,6 @@ void	init2(t_var *var);
 int		mouse_event_draw(int x, int y, t_var *var);
 int		mouse_press(int button, int x, int y, t_var *var);
 int		is_inside_map(int x, int y, t_map *map);
+int		mouse_release(int button, int x, int y, t_var *var);
 
 #endif
