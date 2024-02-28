@@ -6,7 +6,7 @@
 /*   By: jiko <jiko@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 19:57:32 by jiko              #+#    #+#             */
-/*   Updated: 2024/02/28 20:23:00 by jiko             ###   ########.fr       */
+/*   Updated: 2024/02/28 20:24:56 by jiko             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,6 @@ typedef struct s_cor
 typedef struct s_frame
 {
 	double	time;
-	double	old_time;
 	double	frame_time;
 	double	move_speed;
 	double	rot_speed;
