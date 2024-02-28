@@ -1,5 +1,4 @@
 CC = gcc
-# CC = arch -x86_64 gcc
 FLAGS =  -L./ -lmlx -framework OpenGL -framework Appkit -lz
 CFLAGS = -Wall -Wextra -Werror
 LIBFTFLAG	= -Llibft -lft
