@@ -6,7 +6,7 @@
 /*   By: jiko <jiko@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/28 20:26:01 by jiko              #+#    #+#             */
-/*   Updated: 2024/02/12 03:48:27 by jiko             ###   ########.fr       */
+/*   Updated: 2024/02/28 20:02:19 by jiko             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ static char	*ft_get_line(char **str, int *i)
 	return (dest);
 }
 
-static int freeing(char **str, char *buf, char *dest)
+static int	freeing(char **str, char *buf, char *dest)
 {
 	if (buf)
 		free(buf);
@@ -92,7 +92,6 @@ static int	readline(int fd, int *i, char **str)
 	freeing(&buf, NULL, NULL);
 	return (1);
 }
-int g_cnt = 0;
 
 int	get_next_line(int fd, char **dest)
 {
@@ -102,7 +101,6 @@ int	get_next_line(int fd, char **dest)
 	int			flag;
 
 	buf = NULL;
-	g_cnt++;
 	flag = readline(fd, &i, &str);
 	if (!flag)
 		return (-1);

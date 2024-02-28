@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   draw.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: josumin <josumin@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jiko <jiko@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 05:11:15 by sumjo             #+#    #+#             */
-/*   Updated: 2024/02/27 19:04:08 by josumin          ###   ########.fr       */
+/*   Updated: 2024/02/28 19:59:03 by jiko             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,10 +53,10 @@ void	draw_background(int line, t_data *image)
 
 void	draw_minimap(t_var *var, int size)
 {
-	int tmp_x;
-	int tmp_y;
-	int i;
-	int j;
+	int	tmp_x;
+	int	tmp_y;
+	int	i;
+	int	j;
 
 	i = -size;
 	while (i <= size)
@@ -86,12 +86,6 @@ void	draw(t_var *var)
 	draw_background(var->image->height / 2, var->image);
 	draw_map(var);
 	draw_minimap(var, 10);
-	// var->frame->time = get_time();
-	// var->frame->frame_time = \
-		// (var->frame->time - var->frame->old_time) / 1000000.0;
 	mlx_put_image_to_window
 		(var->image->mlx, var->image->win_ptr, var->image->img, 0, 0);
-	// var->frame->old_time = var->frame->time;
-	// var->frame->move_speed = var->frame->frame_time * 5.0;
-	// var->frame->rot_speed = var->frame->frame_time * 3.0;
 }

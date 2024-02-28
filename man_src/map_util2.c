@@ -6,7 +6,7 @@
 /*   By: jiko <jiko@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 17:47:53 by jiko              #+#    #+#             */
-/*   Updated: 2024/02/28 19:41:32 by jiko             ###   ########.fr       */
+/*   Updated: 2024/02/28 20:00:57 by jiko             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,4 +103,3 @@ void	set_param_elif_char(t_map *map, char *line)
 	map->map_height++;
 	map->map_width = ft_max(map->map_width, ft_strlen(line));
 }
-

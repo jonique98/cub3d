@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: josumin <josumin@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jiko <jiko@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 05:09:37 by sumjo             #+#    #+#             */
-/*   Updated: 2024/02/27 19:04:08 by josumin          ###   ########.fr       */
+/*   Updated: 2024/02/28 20:01:31 by jiko             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,6 @@ void	init1(t_var *var)
 	image = ft_calloc(1, sizeof(t_data));
 	vec = ft_calloc(1, sizeof(t_vec_set));
 	frame = ft_calloc(1, sizeof(t_frame));
-
 	init_mlx(image);
 	var->image = image;
 	init_texture(image, var);

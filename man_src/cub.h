@@ -1,3 +1,14 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   cub.h                                              :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jiko <jiko@student.42.fr>                  +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/02/28 19:57:32 by jiko              #+#    #+#             */
+/*   Updated: 2024/02/28 19:58:16 by jiko             ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #ifndef CUB_H
 # define CUB_H
@@ -68,7 +79,6 @@ typedef struct s_frame
 	double	move_speed;
 	double	rot_speed;
 }	t_frame;
-
 
 typedef struct s_vectorset
 {
@@ -203,6 +213,5 @@ void	init1(t_var *var);
 void	init2(t_var *var);
 int		mouse_event_draw(int x, int y, t_var *var);
 int		mouse_press(int button, int x, int y, t_var *var);
-
 
 #endif
