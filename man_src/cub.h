@@ -6,7 +6,7 @@
 /*   By: jiko <jiko@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 19:57:32 by jiko              #+#    #+#             */
-/*   Updated: 2024/02/28 19:58:16 by jiko             ###   ########.fr       */
+/*   Updated: 2024/02/28 20:15:54 by jiko             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -191,7 +191,7 @@ void	calculate_side_dist(t_var *var);
 void	calculate_wall_hit_dda(t_var *var);
 void	calculate_distance_between_wall(t_var *var);
 void	calculate_draw_start_end(t_var *var);
-void	draw_square(t_data *img, int x, int y, int size, int color);
+void	draw_sq(t_data *img, int x, int y, int color);
 void	copy_texture(t_data *img, t_var *var, int idx);
 void	init_texture_direction(char *path, t_data *img, t_var *var, int idx);
 void	init_texture(t_data *img, t_var *var);
@@ -213,5 +213,6 @@ void	init1(t_var *var);
 void	init2(t_var *var);
 int		mouse_event_draw(int x, int y, t_var *var);
 int		mouse_press(int button, int x, int y, t_var *var);
+int		is_inside_map(int x, int y, t_map *map);
 
 #endif

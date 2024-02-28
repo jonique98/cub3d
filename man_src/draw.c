@@ -6,7 +6,7 @@
 /*   By: jiko <jiko@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 05:11:15 by sumjo             #+#    #+#             */
-/*   Updated: 2024/02/28 19:59:03 by jiko             ###   ########.fr       */
+/*   Updated: 2024/02/28 20:15:41 by jiko             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,33 +51,33 @@ void	draw_background(int line, t_data *image)
 	}
 }
 
-void	draw_minimap(t_var *var, int size)
+void	draw_minimap(t_var *var)
 {
 	int	tmp_x;
 	int	tmp_y;
 	int	i;
 	int	j;
 
-	i = -size;
-	while (i <= size)
+	i = -11;
+	while (++i <= 10)
 	{
-		j = -size;
-		while (j <= size)
+		j = -11;
+		while (++j <= 10)
 		{
 			tmp_x = var->vec->pos.x + i;
 			tmp_y = var->vec->pos.y + j;
-			if (tmp_x >= 0 && tmp_x < var->map->map_width && tmp_y >= 0 && tmp_y < var->map->map_height)
+			if (is_inside_map(tmp_x, tmp_y, var->map))
+			{
 				if (var->map->map[tmp_y][tmp_x] == 1)
-					draw_square(var->image, (i + size) * size, (j + size) * size, size, 0x000000);
+					draw_sq(var->image, (i + 10) * 10, (j + 10) * 10, 0x000000);
 				else
-					draw_square(var->image, (i + size) * size, (j + size) * size, size, 0xFFFFFF);
+					draw_sq(var->image, (i + 10) * 10, (j + 10) * 10, 0xFFFFFF);
+			}
 			else
-				draw_square(var->image, (i + size) * size, (j + size) * size, size, 0x000000);
-			j++;
+				draw_sq(var->image, (i + 10) * 10, (j + 10) * 10, 0x000000);
 		}
-		i++;
 	}
-	draw_square(var->image, size * size, size * size, size, 0xFF0000);
+	draw_sq(var->image, 10 * 10, 10 * 10, 0xFF0000);
 }
 
 void	draw(t_var *var)
@@ -85,7 +85,7 @@ void	draw(t_var *var)
 	make_new_img(var->image);
 	draw_background(var->image->height / 2, var->image);
 	draw_map(var);
-	draw_minimap(var, 10);
+	draw_minimap(var);
 	mlx_put_image_to_window
 		(var->image->mlx, var->image->win_ptr, var->image->img, 0, 0);
 }
