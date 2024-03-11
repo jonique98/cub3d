@@ -6,7 +6,7 @@
 /*   By: jiko <jiko@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 05:32:22 by sumjo             #+#    #+#             */
-/*   Updated: 2024/02/28 22:44:41 by jiko             ###   ########.fr       */
+/*   Updated: 2024/03/11 22:36:27 by jiko             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ void	init_texture_direction(char *path, t_data *img, t_var *var, int idx)
 	(TEXTHEIGHT * TEXTWIDTH, sizeof(int));
 	img2.img = mlx_xpm_file_to_image(img->mlx, path, &img2.width, &img2.height);
 	if (!img2.img)
-		ft_exit(1, "Error\nFailed to open xmp\n");
+		ft_exit(1, "Error\nFailed to open xpm\n");
 	img2.addr_tex = (int *)mlx_get_data_addr \
 	(img2.img, &img2.bits_pixel, &img2.line_length, &img2.endian);
 	copy_texture(&img2, var, idx);
